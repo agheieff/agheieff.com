@@ -1,4 +1,4 @@
 - Debug in nginx.conf
 - Access and error logs enabled in agheieff
-- /pages/ should be getting deleted, but doesn't — almost figured out, work a bit more
 - ssi enabled, but causes errors for now
+- ssi footer not working for now
