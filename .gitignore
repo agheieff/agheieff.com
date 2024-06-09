@@ -1,0 +1,7 @@
+# Ignore SSL certificates and private keys
+config/ssl/*.pem
+config/ssl/*.key
+
+# Ignore NGINX logs and temporary files
+config/nginx/logs/
+config/nginx/tmp/
