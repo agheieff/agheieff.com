@@ -1,0 +1,8 @@
+*
+
+!.gitignore
+!sites-available/
+!sites-available/**
+!sites-enabled/
+!sites-enabled/**
+!nginx.conf
