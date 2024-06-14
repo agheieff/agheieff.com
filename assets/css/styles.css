@@ -1,6 +1,6 @@
 :root {
-	--arkadiy-font: Arial, monospace;
-	--naomi-font: "Playfair Display", monospace;
+	--background-color: #ffffc8;
+	--lines-limit: 175px;
 }
 
 * {
@@ -158,8 +158,10 @@ footer p {
 .center-line {
 	position: absolute;
 	top: 50%;
-	width: calc(50vw - 175px);
+	width: calc(50vw - var(--lines-limit));
 }
+
+
 
 @media (max-width: 500px) {
 	.center-line {
@@ -179,3 +181,5 @@ footer p {
 	display: none;
 	background-color: rgba(255, 255, 200, 0);
 }
+
+.
