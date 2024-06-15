@@ -1,9 +1,14 @@
 :root {
-	--background-color: #ffffc8;
+	--background-color: #dddda8;
 	--lines-limit: 175px;
 	--animation-time: 1.5s;
 	--header-color: #ffffc8;
 	--header-padding: 20px;
+	--header-height: 15vh;
+	--mobile-van-width: 700px;
+	--logo-name-color: #680a0a;
+	--logo-date-color: #000060;
+
 }
 
 * {
@@ -14,20 +19,21 @@
 
 body, html {
 	margin: 0;
-	padding: 0;f
+	padding: 0;
 	width: 100%;
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: Garamond;
-	background-color: #f9d4b4;
+	font-family: "Playfair Display";
+	background-color: var(--background-color);
 }
 
 
 
 a {
 	text-decoration: none;
+	color: #000000;
 }
 
 header {
@@ -41,9 +47,33 @@ header {
 	padding: 0 var(--header-padding);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	background-color: var(--header-color);
-	height: 10vh;
+	height: var(--header-height);
 	margin: 0;
 	z-index: 100;
+}
+
+.logo-name {
+	color: var(--logo-name-color);
+}
+
+.
+
+.logo-date {
+	color: var(--logo-date-color);
+}
+
+header .logo-name {
+	font-size: 28px;
+	padding: 0 10px;
+}
+
+header .logo-and {
+	font-size: 24px;
+}
+
+header .logo-date {
+	font-size: 22px;
+	padding: 0 10px;
 }
 
 nav {
@@ -75,7 +105,7 @@ header h1 {
 
 header .header-line {
 	position: fixed;
-	top: 10%;
+	top: var(--header-height);
 	margin-top: -1px;
 	margin-left: calc(var(--header-padding) * -1);
 	width: 100%;
@@ -164,14 +194,11 @@ footer p {
 	animation: continuous-rotate 25s var(--d,0s) linear infinite;
 }
 
-.naomi, .arkadiy {
-	color: #680a0a;
-}
-
-.svatba {
-	color: #000060;
+.circle-date {
+	color: var(--logo-date-color);
 	top: 50%;
 	left: 50%;
+	font-variant-caps: small-caps;
 }
 
 .center-line {
@@ -179,14 +206,6 @@ footer p {
 	top: 50%;
 	margin-top: -1px;
 	width: calc(50vw - var(--lines-limit));
-}
-
-
-
-@media (max-width: 500px) {
-	.center-line {
-		display: none;
-	}
 }
 
 .left-line {
@@ -197,23 +216,25 @@ footer p {
 	right: 0;
 }
 
-@keyframes status-check {
-	0% {visibility: visible}
-	100% {visibility: hidden}
-}
-
 @keyframes div-animation {
-	0% {height: 100%}
-	50% {height: 50%}
-	99% {height: 10%}
-	100% {height: 10%; visibility: hidden;}
+	0% {height: 100vh}
+	50% {height: 50vh}
+	99% {height: var(--header-height);}
+	100% {height: var(--header-height); visibility: hidden;}
 }
 
 @keyframes line-animation {
-	0% {width: calc(50vw - var(--lines-limit)); top: 50%;}
-	50% {width: 50vw; top: 50%;}
-	100% {width: 50vw; top: 10%;}
+	0% {width: calc(50vw - var(--lines-limit)); top: 50vh;}
+	50% {width: 50vw; top: 50vh;}
+	99% {width: 50vw; top: var(--header-height);}
+	100% {width: 50vw; top: var(--header-height);}
+}
 
+@keyframes line-animation-mobile {
+	0% {width: 0vw; visibility: visible; top: 50vh;}
+	50% {width: 50vw; visibility: visible; top: 50vh;}
+	99% {width: 50vw; visibility: visible; top: var(--header-height);}
+	100% {width: 50vw; visibility: hidden; top: var(--header-height);}
 }
 
 @keyframes circle-disappear {
@@ -221,13 +242,6 @@ footer p {
 	1% {opacity: 1; cursor: default; pointer-events: none;}
 	99% {opacity: 0; cursor: default; pointer-events: none;}
 	100% {opacity: 0; cursor: default; visibility: hidden;}
-}
-
-.full-page {
-}
-
-#circle-checkbox:checked + .full-page {
-	animation: status-check 0s 1 forwards;
 }
 
 #circle-checkbox:checked + .full-page {
@@ -242,4 +256,14 @@ footer p {
 	animation: circle-disappear 0.35s forwards;
 }
 
+@media (max-width: 500px) {
+	.center-line {
+		visibility: hidden;
+	}
 
+	#circle-checkbox:checked + div > .center-line {
+		animation: line-animation-mobile var(--animation-time) forwards;
+	}
+
+
+}
