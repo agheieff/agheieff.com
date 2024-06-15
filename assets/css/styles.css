@@ -1,6 +1,9 @@
 :root {
 	--background-color: #ffffc8;
 	--lines-limit: 175px;
+	--animation-time: 1.5s;
+	--header-color: #ffffc8;
+	--header-padding: 20px;
 }
 
 * {
@@ -21,69 +24,7 @@ body, html {
 	background-color: #f9d4b4;
 }
 
-.full-page {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: rgba(255, 255, 200, 1);
-	z-index: 1000;
-}
 
-.landing-page {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 100%;
-}
-
-@keyframes continuous-rotate {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-}
-
-#circle-checkbox {
-	display: none;
-}
-
-.circle {
-	width: 250px;
-	height: 250px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transition: transform 0.5s;
-
-	cursor: pointer;
-	
-	font-family: "Playfair Display", monospace;
-	font-size: 24px;
-}
-
-.rotate {
-	height: 250px;
-	position: absolute;
-	animation: continuous-rotate 25s var(--d,0s) linear infinite;
-}
-
-.naomi, .arkadiy {
-	color: #680a0a;
-}
-
-.svatba {
-	color: #000060;
-	top: 50%;
-	left: 50%;
-}
 
 a {
 	text-decoration: none;
@@ -97,11 +38,11 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 20px;
+	padding: 0 var(--header-padding);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-	background-color: #dbbc8c;
+	background-color: var(--header-color);
 	height: 10vh;
-	margin: 0 5vh;
+	margin: 0;
 	z-index: 100;
 }
 
@@ -132,6 +73,14 @@ header h1 {
 	text-align: center;
 }
 
+header .header-line {
+	position: fixed;
+	top: 10%;
+	margin-top: -1px;
+	margin-left: calc(var(--header-padding) * -1);
+	width: 100%;
+}
+
 main {
 	padding: 20px 0;
 }
@@ -155,9 +104,80 @@ footer p {
 	margin: 0;
 }
 
-.center-line {
-	position: absolute;
+.full-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: var(--header-color);
+	z-index: 1000;
+}
+
+.landing-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@keyframes continuous-rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+#circle-checkbox {
+	display: none;
+}
+
+.circle {
+	position: fixed;
 	top: 50%;
+	left: 50%;
+	margin-top: -150px;
+	margin-left: -150px;
+	width: 300px;
+	height: 300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.5s;
+
+	cursor: pointer;
+	
+	font-family: "Playfair Display", monospace;
+	font-size: 24px;
+}
+
+.rotate {
+	height: 250px;
+	position: absolute;
+	animation: continuous-rotate 25s var(--d,0s) linear infinite;
+}
+
+.naomi, .arkadiy {
+	color: #680a0a;
+}
+
+.svatba {
+	color: #000060;
+	top: 50%;
+	left: 50%;
+}
+
+.center-line {
+	position: fixed;
+	top: 50%;
+	margin-top: -1px;
 	width: calc(50vw - var(--lines-limit));
 }
 
@@ -177,9 +197,49 @@ footer p {
 	right: 0;
 }
 
-#circle-checkbox:not(:checked) + div {
-	display: none;
-	background-color: rgba(255, 255, 200, 0);
+@keyframes status-check {
+	0% {visibility: visible}
+	100% {visibility: hidden}
 }
 
-.
+@keyframes div-animation {
+	0% {height: 100%}
+	50% {height: 50%}
+	99% {height: 10%}
+	100% {height: 10%; visibility: hidden;}
+}
+
+@keyframes line-animation {
+	0% {width: calc(50vw - var(--lines-limit)); top: 50%;}
+	50% {width: 50vw; top: 50%;}
+	100% {width: 50vw; top: 10%;}
+
+}
+
+@keyframes circle-disappear {
+	0% {opacity: 1}
+	1% {opacity: 1; cursor: default; pointer-events: none;}
+	99% {opacity: 0; cursor: default; pointer-events: none;}
+	100% {opacity: 0; cursor: default; visibility: hidden;}
+}
+
+.full-page {
+}
+
+#circle-checkbox:checked + .full-page {
+	animation: status-check 0s 1 forwards;
+}
+
+#circle-checkbox:checked + .full-page {
+	animation: div-animation var(--animation-time) forwards;
+}
+
+#circle-checkbox:checked + div > .center-line {
+	animation: line-animation var(--animation-time) forwards;
+}
+
+#circle-checkbox:checked + div > .circle {
+	animation: circle-disappear 0.35s forwards;
+}
+
+
