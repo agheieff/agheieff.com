@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "EB Garamond";
+	src: url("../fonts/EB_Garamond/EBGaramond08-Regular.otf");
+}
+
 :root {
 	--background-color: #dddda8;
 	--lines-limit: 175px;
@@ -8,6 +13,8 @@
 	--mobile-van-width: 700px;
 	--logo-name-color: #680a0a;
 	--logo-date-color: #000060;
+	--font-family: "EB Garamond", "Playfair Display";
+	--font-size: 16px;
 
 }
 
@@ -25,7 +32,7 @@ body, html {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: "Playfair Display";
+	font-family: var(--font-family);
 	background-color: var(--background-color);
 }
 
@@ -184,8 +191,7 @@ footer p {
 
 	cursor: pointer;
 	
-	font-family: "Playfair Display", monospace;
-	font-size: 24px;
+	font-size: 28px;
 }
 
 .rotate {
