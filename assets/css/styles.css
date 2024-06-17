@@ -37,7 +37,7 @@
 	--animation-time: 1.5s;
 	--header-color: #ffffc8;
 	--header-padding: 20px;
-	--header-height: 10vh;
+	--header-height: 10dvh;
 	--mobile-van-width: 700px;
 	--logo-name-color: #680a0a;
 	--logo-date-color: #000060;
@@ -54,6 +54,13 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+hr {
+	border-top: 1px solid #555555;
+	border-bottom: 1px solid #808080;
+	border-left: 1px solid #555555;
+	border-right: 1px solid #555555;
 }
 
 body, html {
@@ -118,6 +125,44 @@ header .logo-date {
 	padding: 0 10px;
 }
 
+#burger-menu-checkbox {
+	display: none;
+}
+
+.burger-menu-svg {
+	top: 0;
+	right: 0;
+	width: var(--header-height);
+	height: var(--header-height);
+}
+
+.burger-menu-line {
+	fill: #808080;
+}
+
+.burger-menu-border {
+	fill: none;
+	stroke: #808080;
+	stroke-width: 3;
+}
+
+@keyframes burger-rotate-top {
+	0% {transform: rotate(0 70 33.3) scale(1);}
+	100% {transform: rotate(-45 70 33.3) scale(1.4);}
+}
+
+@keyframes burger-rotate-bottom {
+	0% {transform: rotate(0 70 66.7) scale(1);}
+	100% {transform: rotate(45 70 66.7) scale(1.4142);}
+}
+
+@keyframes burger-hide-middle {
+	0% {transform: scale(1);}
+	100% {transform: scale(0);}
+}
+
+
+
 nav {
 	margin-left: auto;
 }
@@ -157,28 +202,45 @@ header .header-line {
 }
 
 @media (max-width: 2000px) { /*TODO change the value, this is for testing */
+	header {
+		padding-right: 0;
+	}
+
 	header nav {
 		position: fixed;
 		right: 0;
 		bottom: 0;
 		width: fit-content(100%);
-		height: calc(100vh - var(--header-height));
+		height: calc(100dvh - var(--header-height))
 	}
 
 	header nav ul {
-		visibility: visible;
+		visibility: hidden;
 		display: inline;
+	}
+
+	#burger-menu-checkbox:checked + nav > ul {
+		visibility: visible;
+	}
+	
+	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-line {
+		animation: burger-rotate-bottom 0.35s forwards;
 	}
 
 	header nav ul li {
 		display: block;
 		padding: var(--side-menu-v-padding) var(--side-menu-h-padding);
+		background-color: var(--header-color);
 
 		border-bottom-width: 1px;
 		border-bottom-color: #555555;
 		border-bottom-style: solid;
 
 		box-shadow: 0 1px #808080;
+
+		border-left-width: 2px;
+		border-left-color: #808080;
+		border-left-style: solid;
 	}
 
 	header nav ul li a {
@@ -294,22 +356,22 @@ left: 0;
 }
 
 @keyframes div-animation {
-	0% {height: 100vh}
-	50% {height: 50vh}
+	0% {height: 100dvh}
+	50% {height: 50dvh}
 	99% {height: var(--header-height);}
 	100% {height: var(--header-height); visibility: hidden;}
 }
 
 @keyframes line-animation {
-	0% {width: calc(50vw - var(--lines-limit)); top: 50vh;}
-	50% {width: 50vw; top: 50vh;}
+	0% {width: calc(50vw - var(--lines-limit)); top: 50dvh;}
+	50% {width: 50vw; top: 50dvh;}
 	99% {width: 50vw; top: var(--header-height);}
 	100% {width: 50vw; top: var(--header-height);}
 }
 
 @keyframes line-animation-mobile {
-	0% {width: 0vw; visibility: visible; top: 50vh;}
-	50% {width: 50vw; visibility: visible; top: 50vh;}
+	0% {width: 0vw; visibility: visible; top: 50dvh;}
+	50% {width: 50vw; visibility: visible; top: 50dvh;}
 	99% {width: 50vw; visibility: visible; top: var(--header-height);}
 	100% {width: 50vw; visibility: hidden; top: var(--header-height);}
 }
