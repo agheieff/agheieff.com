@@ -147,18 +147,18 @@ header .logo-date {
 }
 
 @keyframes burger-rotate-top {
-	0% {transform: rotate(0 70 33.3) scale(1);}
-	100% {transform: rotate(-45 70 33.3) scale(1.4);}
+	0% {transform: rotate(0) translatex(0) translatey(0) scale(1);}
+	100% {transform: rotate(-45deg) translatex(-73px) translatey(24px) scale(1.4142);}
 }
 
 @keyframes burger-rotate-bottom {
-	0% {transform: rotate(0 70 66.7) scale(1);}
-	100% {transform: rotate(45 70 66.7) scale(1.4142);}
+	0% {transform: rotate(0) translateX(0) translatey(0) scale(1);}
+	100% {transform: rotate(45deg) translatex(0px) translatey(-96px) scale(1.4142);}
 }
 
 @keyframes burger-hide-middle {
-	0% {transform: scale(1);}
-	100% {transform: scale(0);}
+	0% {transform: translateX(0) translatey(0) scale(1);}
+	100% {transform: translatex(52px) translatey(52px) scale(0.001);}
 }
 
 
@@ -223,8 +223,16 @@ header .header-line {
 		visibility: visible;
 	}
 	
-	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-line {
+	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-top-line {
+		animation: burger-rotate-top 0.35s forwards;
+	}
+
+	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-bottom-line {
 		animation: burger-rotate-bottom 0.35s forwards;
+	}
+
+	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-middle-line {
+		animation: burger-hide-middle 0.35s forwards;
 	}
 
 	header nav ul li {
@@ -246,6 +254,10 @@ header .header-line {
 	header nav ul li a {
 		padding: var(--side-menu-v-padding) var(--side-menu-h-padding);
 		margin: calc(var(--side-menu-v-padding) * -1) calc(var(--side-menu-h-padding) * -1);
+	}
+
+	header label {
+		cursor: pointer;
 	}
 }
 
