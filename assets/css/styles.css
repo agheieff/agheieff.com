@@ -34,17 +34,18 @@
 :root {
 	--background-color: #dddda8;
 	--lines-limit: 175px;
-	--animation-time: 1.5s;
+	--line-animation-time: 1.5s;
+	--side-menu-animation-time: 0.35s;
 	--header-color: #ffffc8;
 	--header-padding: 20px;
-	--header-height: 10dvh;
+	--header-height: max(63px, 10dvh);
 	--mobile-van-width: 700px;
 	--logo-name-color: #680a0a;
 	--logo-date-color: #000060;
 	--font-family: "EB Garamond12", "Playfair Display";
 	--font-size: 20px;
 	--no-line-media-width: 500px;
-	--burger-menu-media-width: 768px;
+	--side-menu-media-width: 918px;
 	--side-menu-width: 350px;
 	--side-menu-v-padding: 20px;
 	--side-menu-h-padding: 20px;
@@ -129,6 +130,10 @@ header .logo-date {
 	display: none;
 }
 
+header label {
+	visibility: hidden;
+}
+
 .burger-menu-svg {
 	top: 0;
 	right: 0;
@@ -191,6 +196,7 @@ header .logo-date {
 
 nav {
 	margin-left: auto;
+	margin-right: calc(var(--header-height) * -1);
 }
 
 nav ul {
@@ -227,37 +233,41 @@ header .header-line {
 	width: 100vw;
 }
 
-@media (max-width: 2000px) { /*TODO change the value, this is for testing */
+@media (max-width: 918px) { /*TODO change the value, this is for testing */
 	header {
 		padding-right: 0;
 	}
 
+	header label {
+		visibility: visible;
+	}
+
 	#burger-menu-checkbox:checked + nav > ul > li {
-		animation: open-sidebar 0.35s forwards;
+		animation: open-sidebar var(--side-menu-animation-time) forwards;
 	}
 
 	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-top-line {
-		animation: burger-rotate-top 0.35s forwards;
+		animation: burger-rotate-top var(--side-menu-animation-time) forwards;
 	}
 
 	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-bottom-line {
-		animation: burger-rotate-bottom 0.35s forwards;
+		animation: burger-rotate-bottom var(--side-menu-animation-time) forwards;
 	}
 
 	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-middle-line {
-		animation: burger-hide-middle 0.35s forwards;
+		animation: burger-hide-middle var(--side-menu-animation-time) forwards;
 	}
 
 	#burger-menu-checkbox:not(:checked) ~ label > svg > .burger-menu-top-line {
-		animation: burger-return-top 0.35s forwards;
+		animation: burger-return-top var(--side-menu-animation-time) forwards;
 	}
 
 	#burger-menu-checkbox:not(:checked) ~ label > svg > .burger-menu-bottom-line {
-		animation: burger-return-bottom 0.35s forwards;
+		animation: burger-return-bottom var(--side-menu-animation-time) forwards;
 	}
 
 	#burger-menu-checkbox:not(:checked) ~ label > svg > .burger-menu-middle-line {
-		animation: burger-return-middle 0.35s forwards;
+		animation: burger-return-middle var(--side-menu-animation-time) forwards;
 	}
 
 	header nav {
@@ -266,6 +276,7 @@ header .header-line {
 		bottom: 0;
 		width: fit-content(100%);
 		height: calc(100dvh - var(--header-height));
+		margin-right: auto;
 	}
 
 	header nav ul {
@@ -292,11 +303,11 @@ header .header-line {
 	}
 
 	#burger-menu-checkbox:checked + nav > ul > li {
-		anumation: open-sidebar 0.35s forwards;
+		anumation: open-sidebar var(--side-menu-animation-time) forwards;
 	}
 
 	#burger-menu-checkbox:checked + nav > ul li > a {
-		animation: open-sidebar-text 0.35s forwards;
+		animation: open-sidebar-text var(--side-menu-animation-time) forwards;
 	}
 
 	header label {
@@ -439,15 +450,15 @@ left: 0;
 }
 
 #circle-checkbox:checked + .full-page {
-	animation: div-animation var(--animation-time) forwards;
+	animation: div-animation var(--line-animation-time) forwards;
 }
 
 #circle-checkbox:checked + div > .center-line {
-	animation: line-animation var(--animation-time) forwards;
+	animation: line-animation var(--line-animation-time) forwards;
 }
 
 #circle-checkbox:checked + div > .circle {
-	animation: circle-disappear 0.35s forwards;
+	animation: circle-disappear 0.36s forwards;
 }
 
 @media (max-width: 500px) {
@@ -456,7 +467,7 @@ left: 0;
 	}
 
 	#circle-checkbox:checked + div > .center-line {
-		animation: line-animation-mobile var(--animation-time) forwards;
+		animation: line-animation-mobile var(--line-animation-time) forwards;
 	}
 }
 
