@@ -98,6 +98,8 @@ header {
 	height: var(--header-height);
 	margin: 0;
 	z-index: 100;
+
+	font-size: 25px;
 }
 
 .logo-name {
@@ -109,6 +111,7 @@ header {
 }
 
 .logo-date {
+	
 	color: var(--logo-date-color);
 }
 
@@ -121,9 +124,14 @@ header .logo-and {
 	font-size: 24px;
 }
 
+header .logo-line {
+	margin-bottom: 5px;
+	padding-bottom: 0; --TODO
+}
+
 header .logo-date {
 	font-size: 22px;
-	padding: 0 10px;
+	padding: 10px 10px;
 }
 
 #burger-menu-checkbox {
