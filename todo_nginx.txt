@@ -1,4 +1,0 @@
-- Debug in nginx.conf
-- Access and error logs enabled in agheieff
-- ssi enabled, but causes errors for now
-- ssi footer not working for now
