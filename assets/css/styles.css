@@ -186,6 +186,13 @@ nav ul li a {
 	font-weight: bold;
 }
 
+nav .lang-switch {
+	color: #fff;
+	position: absolute;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
 main {
 	font-size: var(--font-size);
 	line-height: 1.25;

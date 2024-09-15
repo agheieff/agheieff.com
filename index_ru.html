@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="cs"><head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<title>Arkadiy &amp; Naomi</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+</head>
+
+	<body>
+		<header>
+			<input type="checkbox" id="circle-checkbox" autocomplete="off"/>
+			<div class="full-page">
+				<hr class="left-line center-line">
+				<hr class="right-line center-line">
+				<label for="circle-checkbox" class="circle">
+					<span class="rotate circle-name" style="--d:-16.497s">А</span>
+					<span class="rotate circle-name" style="--d:-17.209s">р</span>
+					<span class="rotate circle-name" style="--d:-17.837s">к</span>
+					<span class="rotate circle-name" style="--d:-18.420s">а</span>
+					<span class="rotate circle-name" style="--d:-19.003s">д</span>
+					<span class="rotate circle-name" style="--d:-19.632s">и</span>
+					<span class="rotate circle-name" style="--d:-20.288s">й</span>
+
+					<span class="rotate circle-and" style="--d:-0s">&amp;</span>
+
+					<span class="rotate circle-name" style="--d:-4.526s">Н</span>
+					<span class="rotate circle-name" style="--d:-5.241s">а</span>
+					<span class="rotate circle-name" style="--d:-5.838s">о</span>
+					<span class="rotate circle-name" style="--d:-6.519s">м</span>
+					<span class="rotate circle-name" style="--d:-7.212s">и</span>
+
+					<span class="rotate circle-and" style="--d:-12.5s">&amp;</span>
+
+					<div class="circle-date">12.10.2024</div>
+				</label>
+			</div>
+
+
+			<input type="checkbox" id="burger-menu-checkbox" autocomplete="off">
+
+			<nav>
+					<ul id="list">
+						<li class="logo">
+							<a class="logo" href="#">
+								<div class="logo-first-line">
+									<span class="logo-name">Аркадий</span>
+									<span class="logo-and">&amp;</span>
+									<span class="logo-name">Наоми</span>
+								</div>
+								<hr class="logo-line">
+								<div class="logo-second-line">
+									<span class="logo-date">Свадьба</span>
+								</div>
+							</a>
+						</li>
+					<li><a href="#about">О нас</a></li>
+						<li><a href="#route">Как добраться?</a></li>
+						<li><a href="#gifts">Хотите сделать нам подарок?</a></li>
+						<li><a href="#dress-code">Дресс-код</a></li>
+						<li><a href="#ceremony">Что делать в церкви?</a></li>
+						<li><a href="#booklet">Буклет</a></li>
+					</ul>
+				<a href="index.html" class="lang-switch">CS</a>
+			</nav>
+
+			<script>
+				document.getElementById('list').addEventListener('click', function(e) {
+					document.getElementById('burger-menu-checkbox').checked = false;
+				});
+			</script>
+
+			<label for="burger-menu-checkbox">
+				<svg viewBox="0 0 100 100" height="100" width="100" class="burger-menu-svg">
+					<rect class="burger-menu-top-line" width="36.7" height="3" x="33.3" y="33.3" rx="1" ry="1"></rect>
+					<rect class="burger-menu-middle-line" width="36.7" height="3" x="33.3" y="50" rx="1" ry="1"></rect>
+					<rect class="burger-menu-bottom-line" width="36.7" height="3" x="33.3" y="66.7" rx="1" ry="1"></rect>
+					<rect class="burger-menu-border" width="60" height="60" x="20" y="20" rx="12" ry="12"></rect>
+				</svg>
+			</label>
+		</header>
+
+		<main>
+			<section id="about" class="first-section">
+				<h2>О нас</h2>
+				<div class="photos">
+					<img src="/assets/photos/foto1.jpg" alt="Наша фотография 1" width="200" class="about-photo">
+					<img src="/assets/photos/foto2.jpg" alt="Наша фотография 2" width="200" class="about-photo">
+					<img src="/assets/photos/foto3.jpg" alt="Наша фотография 3" width="200" class="about-photo">
+				</div>
+				<p class="quote">«Что Бог сочетал, того человек да не разлучает (Евангелие от Марка, 10:9)</p>
+				<p>Мы — Аркадий и Наоми, и мы хотим быть вместе навсегда. Отпразднуйте вместе с нами тот день, когда мы хотим подтвердить нашу любовь в священной клятве перед Всевышним.</p>
+			</section>
+
+			<section id="route">
+				<h2>Как добраться?</h2>
+				<p>Церковь находится по адресу: Náměstí 14. října 17/642, 150 00, Прага 5, в нескольких минутах ходьбы от станции метро Anděl.</p>
+			</section>
+
+			<section id="gifts">
+				<h2>Chcete nás obdarovat?</h2>
+				<p>Ваше присутствие будет для нас самым большим подарком, а ваши молитвы - еще большим. Если вы раздумываете над материальным подарком, мы будем рады денежному пожертвованию.</p>
+				<p>Подарок вы, конечно, можно передать нам лично, но если вы хотите отправить его нам, воспользуйтесь одним из следующих вариантов:</p>
+				<h4>На банковский счет (Чехия):</h4>
+				<p>1861707002/5500</p>
+				<p>Пожалуйста, напишите в комментариях свое имя и небольшое приветствие для нас.</p>
+				<h4>В криптовалюте:</h4>
+				<p class="crypto-address">BTC: bc1qrlh678lq0vs0jvft6s7k48zsc6srtuk8762qt9</p>
+				<p class="crypto-address">ETC: 0x19a799458140ccE80A7A44E562257d9b68541a08</p>
+				<p class="crypto-address">USDT: 0x19a799458140ccE80A7A44E562257d9b68541a08</p>
+				<p class="crypto-address">XMR: 47q23AQbLGwBkrXYjaDZtxNDWroZvaC5vcZkDgFTCX76c692B8R6nf6FxxXYy2nR1hecVxHUTsKgjBFgUqfy6o6ZMkUUSdZ</p>
+			</section>
+
+			<section id="dress-code">
+				<h2>Дресс-код</h2>
+				<p>Дресс-код на нашей свадьбе основан на католических обычаях и церковном пространстве. Для женщины необходимо, чтобы плечи были закрыты, а платье было ниже колена. Мужчинам нельзя носить шляпу в церкви, а брюки также должны быть ниже колена. Мы приветствуем не кричащие цвета. Большое спасибо за понимание.</p>
+			</section>
+
+			<section id="ceremony">
+				<h2>Что делать в церкви?</h2>
+				<p>Месса — это церковный обряд, в котором есть свои правила. Однако, пожалуйста, не напрягайтесь. Просто идите мимо людей, по которым видно, что они знают, что делают, то есть преклоняют колени и встают без колебаний.</p>
+				<p>Если какое-то недомогание не позволяет вам преклонить колени, пожалуйста, тоже не напрягайтесь.</p>
+				<p>На месте проведения мессы будет выдан печатный буклет, в котором будут изложены все инструкции для вас.</p>
+			</section>
+
+			<section id="booklet" class="last-section">
+				<h2>Буклет</h2>
+				<p>Пожалуйста, вернитесь через некоторое время, будет доступен буклет с полным текстом и порядком проведения мессы.</p>
+			</section>
+		</main>
+
+		<footer>
+			<p>Если у вас возникли вопросы, пожалуйста, пишите нам по адресу <a href="mailto:svatba@agheieff.com">svatba@agheieff.com</a></p>
+			<p>12.X.2024 от Р. Х.</p>
+		</footer>
+	</body>
+</html>
