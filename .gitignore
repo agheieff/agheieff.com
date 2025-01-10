@@ -1,14 +1,14 @@
 *
 
-!.html
-!.css
+!**/*.html
+!**/*.css
 
-!.woff2
-!.otf
-!.jpg
+!**/*.woff2
+!**/*.otf
+!**/*.jpg
 
-!.ods
-!CNAME
+!**/*.ods
+!**/CNAME
 
 !.gitignore
 
