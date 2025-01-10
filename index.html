@@ -54,8 +54,6 @@
 								</div>
 							</a>
 						</li>
-						<li><a href="#about">O nás</a></li>
-						<li><a href="#gifts">Chcete nás obdarovat?</a></li>
 					</ul>
 				<a href="index_ru.html" class="lang-switch">RU</a>
 			</nav>
@@ -86,37 +84,6 @@
 				</div>
 				<p class="quote">“Co Bůh spojil, člověk nerozlučuj.” (Marek 10, 9)</p>
 				<p>Děkujeme vám všem, že jste byli v tento velký den s námi. Vraťte se, prosím, za nějakou dobu na stránky pro fotografie ze svatby.</p>
-			</section>
-
-			<section id="gifts">
-				<h2>Chcete nás obdarovat?</h2>
-				<p>Největším darem nám bude Vaše přítomnost, ještě větším Vaše modlitby. Pokud uvažujete o materiálním daru, uvítáme spíše finanční příspěvek.</p>
-				<p>Dárek nám samozřejmě můžete předat osobně, ale v případě, že nám ho chcete poslat, můžete využít některou z následujících možností:</p>
-				<h4>Na bankovní účet:</h4>
-				<p class="account-number"><span class="copy-text">1861707002/5500</span></p>
-				<p>Do komentáře prosím napište své jméno a malý pozdrav pro nás.</p>
-				<h4>V kryptoměně:</h4>
-				<p class="crypto-address">BTC: <span class="copy-text">bc1qrlh678lq0vs0jvft6s7k48zsc6srtuk8762qt9</span></p>
-				<p class="crypto-address">ETC: <span class="copy-text">0x19a799458140ccE80A7A44E562257d9b68541a08</span></p>
-				<p class="crypto-address">USDT: <span class="copy-text">0x19a799458140ccE80A7A44E562257d9b68541a08<span></p>
-				<p class="crypto-address">XMR: <span class="copy-text">47q23AQbLGwBkrXYjaDZtxNDWroZvaC5vcZkDgFTCX76c692B8R6nf6FxxXYy2nR1hecVxHUTsKgjBFgUqfy6o6ZMkUUSdZ</span></p>
-
-				<script>
-					document.querySelectorAll('.copy-text').forEach(function(span) {
-						span.onclick = function() {
-							document.execCommand("copy");
-						}
-					});
-					document.querySelectorAll('span.copy-text').forEach(function(span) {
-						span.addEventListener("copy", function(event) {
-							event.preventDefault();
-							if (event.clipboardData) {
-								event.clipboardData.setData("text/plain", span.textContent);
-								console.log(event.clipboardData.getData("text"));
-							}
-						});
-					});
-				</script>
 			</section>
 		</main>
 

@@ -54,8 +54,6 @@
 								</div>
 							</a>
 						</li>
-						<li><a href="#about">О нас</a></li>
-						<li><a href="#gifts">Хотите сделать нам подарок?</a></li>
 					</ul>
 				<a href="index.html" class="lang-switch">CS</a>
 			</nav>
@@ -85,39 +83,7 @@
 					<img src="assets/photos/foto3.jpg" alt="Наша фотография 3" width="200" class="about-photo">
 				</div>
 				<p class="quote">«Что Бог сочетал, того человек да не разлучает (Евангелие от Марка, 10:9)</p>
-				<p>Спасибо вам всем за то, что вы провели этот прекрасный день с нами. Возвращайтесь на сайт чуть позже за фотографиямию</p>
-			</section>
-
-			<section id="gifts">
-				<h2>Хотите сделать нам подарок?</h2>
-				<p>Ваше присутствие будет для нас самым большим подарком, а ваши молитвы - еще большим. Если вы раздумываете над материальным подарком, мы будем рады денежному пожертвованию.</p>
-				<p>Подарок вы, конечно, можно передать нам лично, но если вы хотите отправить его нам, воспользуйтесь одним из следующих вариантов:</p>
-				<h4>На банковский счет (Чехия):</h4>
-				<p class="account-number"><span class="copy-text">1861707002/5500</span></p>
-				<p>Пожалуйста, напишите в комментариях свое имя и небольшое приветствие для нас.</p>
-				<h4>В криптовалюте:</h4>
-				<p class="crypto-address">BTC: <span class="copy-text">bc1qrlh678lq0vs0jvft6s7k48zsc6srtuk8762qt9</span></p>
-				<p class="crypto-address">ETC: <span class="copy-text">0x19a799458140ccE80A7A44E562257d9b68541a08</span></p>
-				<p class="crypto-address">USDT: <span class="copy-text">0x19a799458140ccE80A7A44E562257d9b68541a08</span></p>
-				<p class="crypto-address">XMR: <span class="copy-text">47q23AQbLGwBkrXYjaDZtxNDWroZvaC5vcZkDgFTCX76c692B8R6nf6FxxXYy2nR1hecVxHUTsKgjBFgUqfy6o6ZMkUUSdZ</span></p>
-
-				<script>
-					document.querySelectorAll('.copy-text').forEach(function(span) {
-						span.onclick = function() {
-							document.execCommand("copy");
-						}
-					});
-
-					document.querySelectorAll('span.copy-text').forEach(function(span) {
-						span.addEventListener("copy", function(event) {
-							event.preventDefault();
-							if (event.clipboardData) {
-								event.clipboardData.setData("text/plain", span.textContent);
-								console.log(event.clipboardData.getData("text"));
-							}
-						});
-					});
-				</script>
+				<p>Спасибо вам всем за то, что вы провели этот прекрасный день с нами. Возвращайтесь на сайт чуть позже за фотографиями.</p>
 			</section>
 		</main>
 
