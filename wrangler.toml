@@ -1,0 +1,6 @@
+name = "dev-access-control"
+main = "workers/dev-access-control.js"
+compatibility_date = "2024-08-05"
+
+[env.production]
+route = { pattern = "dev.agheieff.com/*", zone_name = "agheieff.com" }

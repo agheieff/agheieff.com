@@ -11,6 +11,9 @@
 !**/CNAME
 
 !.gitignore
+!CLAUDE.md
+!wrangler.toml
+!**/*.js
 
 !*/
 
