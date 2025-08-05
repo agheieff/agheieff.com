@@ -13,6 +13,9 @@ This is a wedding website for Arkadiy and Naomi, hosted at agheieff.com via Clou
 - `/svatba/` - Main Czech wedding page
 - `/svatba/ru/` - Russian language version
 - `/svatba/assets/` - Static assets (CSS, fonts, photos)
+- `/workers/` - Cloudflare Workers scripts (dev access control)
+- `wrangler.toml` - Cloudflare Workers configuration
+- `.gitignore` - Configured to only track specific file types
 
 ### Key Features
 1. **Animated Circle Logo**: CSS-based rotating text animation with individual character timing
@@ -26,7 +29,7 @@ The site is deployed to Cloudflare Pages:
 - **Project Name**: agheieff-com
 - **Custom Domain**: agheieff.com
 - **Pages Domain**: agheieff-com.pages.dev
-- **Git Integration**: Yes (though local directory is not a git repo)
+- **Git Integration**: Yes (connected to GitHub repo agheieff/agheieff.com)
 
 ## Development Commands
 
@@ -40,13 +43,20 @@ npx http-server
 ```
 
 ### Deployment
-With Wrangler authenticated:
+Cloudflare Pages automatically deploys on git push:
+- Push to `main` → deploys to agheieff.com
+- Push to `dev` → deploys to dev.agheieff.com (with IP protection)
+
+Manual deployment (if needed):
 ```bash
 # Deploy to Cloudflare Pages
 wrangler pages deploy . --project-name=agheieff-com
 
 # View deployment logs
 wrangler pages deployment tail
+
+# List all deployments
+wrangler pages deployment list --project-name=agheieff-com
 ```
 
 ## CSS Architecture
@@ -94,12 +104,11 @@ To deploy changes to the worker:
 wrangler deploy --env production
 ```
 
-### DNS Configuration Required
-To complete the dev subdomain setup, add a DNS record in Cloudflare dashboard:
-- Type: CNAME
-- Name: dev
-- Target: dev-access-control-production.agheieff.workers.dev
-- Proxy status: Proxied (orange cloud)
+### Updating IP Access
+When your IP changes, update the worker:
+1. Edit `/workers/dev-access-control.js` with new IP
+2. Deploy: `wrangler deploy --env production`
+3. Commit and push changes to keep git in sync
 
 ## Important Notes
 
