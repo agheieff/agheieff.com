@@ -76,6 +76,31 @@ Simple href-based switching between `/svatba` and `/svatba/ru` with a language t
 - Media queries at 500px and 918px breakpoints
 - Viewport-relative sizing for key elements
 
+## Development Environment
+
+### Branch Strategy
+- `main` branch: Production (agheieff.com)
+- `dev` branch: Development (dev.agheieff.com)
+
+### dev.agheieff.com Setup
+The dev subdomain is protected by IP-based access control using a Cloudflare Worker:
+- Only accessible from IP: 78.80.80.56
+- Returns 404 for all other IPs
+- Worker code in `/workers/dev-access-control.js`
+- Configured in `wrangler.toml`
+
+To deploy changes to the worker:
+```bash
+wrangler deploy --env production
+```
+
+### DNS Configuration Required
+To complete the dev subdomain setup, add a DNS record in Cloudflare dashboard:
+- Type: CNAME
+- Name: dev
+- Target: dev-access-control-production.agheieff.workers.dev
+- Proxy status: Proxied (orange cloud)
+
 ## Important Notes
 
 - The author explicitly states "I don't like JavaScript" - NO JavaScript should be used
