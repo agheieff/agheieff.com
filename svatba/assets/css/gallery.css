@@ -30,19 +30,22 @@
     justify-content: center;
 }
 
-/* Center last incomplete row - for 4 columns, last 2 items */
-@supports (grid-template-columns: subgrid) {
-    .photo-grid .photo-item:nth-last-child(2):nth-child(4n + 3) {
-        grid-column: 2 / span 1;
-    }
-}
+/* Note: With 198 photos:
+   - 6 columns: 33 rows (no remainder)
+   - 5 columns: 39 rows + 3 remainder (centered above)
+   - 4 columns: 49 rows + 2 remainder 
+   - 3 columns: 66 rows (no remainder)
+   - 1 column: 198 rows (no remainder)
+*/
 
-/* For browsers without subgrid support, use simpler centering */
-.photo-grid .photo-item:nth-child(197) {
-    grid-column: 2;
-}
-.photo-grid .photo-item:nth-child(198) {
-    grid-column: 3;
+/* Center last 2 photos in 4-column layout */
+@media (min-width: 1500px) and (max-width: 1799px) {
+    .photo-grid .photo-item:nth-child(197) {
+        grid-column: 2;
+    }
+    .photo-grid .photo-item:nth-child(198) {
+        grid-column: 3;
+    }
 }
 
 /* Individual photo container */
@@ -101,24 +104,24 @@
 
 /* Responsive breakpoints */
 /* Very wide screens - 6 columns */
-@media (min-width: 1800px) {
+@media (min-width: 2000px) {
     .photo-grid {
         grid-template-columns: repeat(6, 1fr);
     }
     
     .gallery-container {
-        max-width: 1800px;
+        max-width: 2000px;
     }
 }
 
 /* Wide screens - 5 columns */
-@media (min-width: 1700px) and (max-width: 1799px) {
+@media (min-width: 1800px) and (max-width: 1999px) {
     .photo-grid {
         grid-template-columns: repeat(5, 1fr);
     }
     
     .gallery-container {
-        max-width: 1700px;
+        max-width: 1800px;
     }
     
     /* Center last 3 photos in 5-column layout */
@@ -133,38 +136,46 @@
     }
 }
 
-/* Default 4 columns */
-@media (max-width: 1699px) {
+/* Medium screens - 4 columns */
+@media (min-width: 1500px) and (max-width: 1799px) {
     .photo-grid {
         grid-template-columns: repeat(4, 1fr);
     }
+    
+    .gallery-container {
+        max-width: 1600px;
+    }
 }
 
-/* Tablet - 3 columns */
-@media (max-width: 900px) {
+/* Smaller screens - 3 columns */
+@media (min-width: 919px) and (max-width: 1499px) {
     .photo-grid {
         grid-template-columns: repeat(3, 1fr);
     }
     
-    .photo-item.landscape-wide {
-        grid-column: span 1;
-        aspect-ratio: 1;
+    .gallery-container {
+        max-width: 1200px;
     }
 }
 
-/* Mobile - 2 columns */
-@media (max-width: 600px) {
+/* Mobile with sidebar - 1 column */
+@media (max-width: 918px) {
     .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
     
     .gallery-container {
-        padding: 1rem 0.5rem;
+        padding: 1rem 0.5rem 3rem 0.5rem;
     }
     
     .photo-item.portrait {
         grid-row: span 1;
+        aspect-ratio: 1;
+    }
+    
+    .photo-item.landscape-wide {
+        grid-column: span 1;
         aspect-ratio: 1;
     }
 }
