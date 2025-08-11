@@ -112,13 +112,13 @@
 }
 
 /* Wide screens - 5 columns */
-@media (min-width: 1400px) and (max-width: 1799px) {
+@media (min-width: 1700px) and (max-width: 1799px) {
     .photo-grid {
         grid-template-columns: repeat(5, 1fr);
     }
     
     .gallery-container {
-        max-width: 1600px;
+        max-width: 1700px;
     }
     
     /* Center last 3 photos in 5-column layout */
@@ -134,7 +134,7 @@
 }
 
 /* Default 4 columns */
-@media (max-width: 1399px) {
+@media (max-width: 1699px) {
     .photo-grid {
         grid-template-columns: repeat(4, 1fr);
     }
