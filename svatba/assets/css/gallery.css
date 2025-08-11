@@ -221,6 +221,7 @@
     max-height: 90vh;
     margin: auto;
     cursor: default;
+    display: inline-block;
 }
 
 .lightbox-image {
@@ -233,48 +234,64 @@
     cursor: zoom-in;
 }
 
-/* Close button */
+/* Close button - positioned on the photo */
 .lightbox-close {
     position: absolute;
-    top: -40px;
-    right: 0;
+    top: 20px;
+    right: 20px;
     color: white;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 300;
     text-decoration: none;
-    padding: 0 10px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
     line-height: 1;
-    transition: opacity 0.2s;
+    transition: all 0.2s;
+    z-index: 10;
 }
 
 .lightbox-close:hover {
-    opacity: 0.7;
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
 }
 
-/* Navigation arrows */
+/* Navigation arrows - fixed position on viewport sides */
 .lightbox-nav {
-    position: absolute;
+    position: fixed;
     top: 50%;
     transform: translateY(-50%);
     color: white;
     font-size: 3rem;
     text-decoration: none;
-    padding: 0 20px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
     font-weight: 300;
-    transition: opacity 0.2s;
+    transition: all 0.2s;
     user-select: none;
+    z-index: 10;
 }
 
 .lightbox-nav:hover {
-    opacity: 0.7;
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-50%) scale(1.1);
 }
 
 .lightbox-prev {
-    left: 20px;
+    left: 30px;
 }
 
 .lightbox-next {
-    right: 20px;
+    right: 30px;
 }
 
 /* Photo number indicator */
@@ -317,31 +334,24 @@
     }
     
     .lightbox-close {
-        top: 10px;
-        right: 10px;
-        background: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         position: fixed;
+        top: 15px;
+        right: 15px;
         z-index: 10001;
     }
     
     .lightbox-nav {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px 15px;
-        border-radius: 5px;
+        position: fixed;
+        width: 50px;
+        height: 50px;
     }
     
     .lightbox-prev {
-        left: 10px;
+        left: 15px;
     }
     
     .lightbox-next {
-        right: 10px;
+        right: 15px;
     }
 }
 
