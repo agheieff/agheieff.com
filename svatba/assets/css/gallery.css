@@ -198,12 +198,21 @@
     z-index: 9999;
     overflow: auto;
     cursor: zoom-out;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .lightbox:target {
     display: flex;
     align-items: center;
     justify-content: center;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Hide images in non-targeted lightboxes to prevent loading */
+.lightbox:not(:target) .lightbox-image {
+    display: none;
 }
 
 .lightbox-content {
