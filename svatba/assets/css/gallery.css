@@ -210,6 +210,11 @@
     opacity: 1;
 }
 
+/* Use content-visibility to defer rendering of non-visible lightboxes */
+.lightbox:not(:target) {
+    content-visibility: auto;
+    contain-intrinsic-size: 100vw 100vh;
+}
 
 .lightbox-content {
     position: relative;
