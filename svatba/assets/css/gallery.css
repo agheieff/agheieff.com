@@ -281,15 +281,17 @@
     right: calc(50% - min(67.5vh, 45vw) - 60px); /* Outside right edge of landscape photo */
 }
 
-/* Photo number indicator */
+/* Photo number indicator - positioned relative to photo bottom */
 .lightbox-counter {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
+    bottom: calc(50% - min(45vh, 30vw) + 25px); /* 25px from bottom of photo, adapts to photo height */
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-size: 0.9rem;
     opacity: 0.8;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Click outside to close - backdrop link */
