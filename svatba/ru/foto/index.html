@@ -4612,5 +4612,15 @@
 	<footer>
 		<p>© 2024 Arkadiy & Naomi</p>
 	</footer>
+	
+	<script>
+	// Hide counters initially, show when image loads
+	document.querySelectorAll('.lightbox-counter').forEach(c => c.style.visibility = 'hidden');
+	document.querySelectorAll('.lightbox-image').forEach(img => {
+		img.addEventListener('load', () => {
+			img.nextElementSibling.style.visibility = 'visible';
+		});
+	});
+	</script>
 </body>
 </html>
