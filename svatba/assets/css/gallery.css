@@ -210,10 +210,6 @@
     opacity: 1;
 }
 
-/* Hide images in non-targeted lightboxes to prevent loading */
-.lightbox:not(:target) .lightbox-image {
-    display: none;
-}
 
 .lightbox-content {
     position: relative;
