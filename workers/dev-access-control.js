@@ -12,7 +12,7 @@ export default {
     
     // If IP matches, fetch the actual page content
     const url = new URL(request.url);
-    url.hostname = 'ac524b9f.agheieff-com.pages.dev'; // Pages preview deployment URL
+    url.hostname = '89269215.agheieff-com.pages.dev'; // Pages preview deployment URL
     
     return fetch(url.toString(), request);
   }
