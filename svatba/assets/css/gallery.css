@@ -284,8 +284,8 @@
 
 /* Photo number indicator - positioned relative to photo bottom */
 .lightbox-counter {
-    position: fixed;
-    bottom: calc(50% - min(45vh, 30vw) + 25px); /* 25px from bottom of photo, adapts to photo height */
+    position: absolute;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
