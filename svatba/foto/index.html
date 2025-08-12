@@ -4617,9 +4617,9 @@
 	// Hide counters initially, show when image loads
 	document.querySelectorAll('.lightbox-counter').forEach(c => c.style.visibility = 'hidden');
 	document.querySelectorAll('.lightbox-image').forEach(img => {
-		img.addEventListener('load', () => {
-			img.nextElementSibling.style.visibility = 'visible';
-		});
+		const showCounter = () => img.nextElementSibling.style.visibility = 'visible';
+		if (img.complete) showCounter();
+		else img.addEventListener('load', showCounter);
 	});
 	</script>
 </body>
