@@ -235,11 +235,11 @@
     cursor: zoom-in;
 }
 
-/* Close button - fixed position */
+/* Close button - positioned relative to image */
 .lightbox-close {
-    position: fixed;
-    top: calc(50% - 45vh + 30px); /* 30px from top of photo area */
-    right: calc(50% - min(67.5vh, 45vw) + 30px); /* 30px from right edge of landscape photo */
+    position: absolute;
+    top: 25px;
+    right: 25px;
     color: white;
     font-size: 2.5rem;
     font-weight: 300;

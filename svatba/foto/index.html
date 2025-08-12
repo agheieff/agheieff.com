@@ -4614,12 +4614,15 @@
 	</footer>
 	
 	<script>
-	// Hide counters initially, show when image loads
-	document.querySelectorAll('.lightbox-counter').forEach(c => c.style.visibility = 'hidden');
+	// Hide counters and close buttons initially, show when image loads
+	document.querySelectorAll('.lightbox-counter, .lightbox-close').forEach(el => el.style.visibility = 'hidden');
 	document.querySelectorAll('.lightbox-image').forEach(img => {
-		const showCounter = () => img.nextElementSibling.style.visibility = 'visible';
-		if (img.complete) showCounter();
-		else img.addEventListener('load', showCounter);
+		const showElements = () => {
+			img.nextElementSibling.style.visibility = 'visible'; // counter
+			img.parentElement.querySelector('.lightbox-close').style.visibility = 'visible'; // close button
+		};
+		if (img.complete) showElements();
+		else img.addEventListener('load', showElements);
 	});
 	</script>
 </body>
