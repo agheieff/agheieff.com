@@ -4614,12 +4614,28 @@
 	</footer>
 	
 	<script>
-	// Hide counters and close buttons initially, show when image loads
-	document.querySelectorAll('.lightbox-counter, .lightbox-close').forEach(el => el.style.visibility = 'hidden');
-	document.querySelectorAll('.lightbox-image').forEach(img => {
+	// Add download buttons and handle visibility
+	document.querySelectorAll('.lightbox-content').forEach((content, index) => {
+		const photoNum = String(index + 1).padStart(3, '0');
+		const downloadBtn = document.createElement('a');
+		downloadBtn.className = 'lightbox-download';
+		downloadBtn.href = `https://wedding-photos.agheieff.com/originals/${photoNum}.jpg`;
+		downloadBtn.download = `wedding_photo_${photoNum}.jpg`;
+		downloadBtn.innerHTML = '⬇';
+		content.appendChild(downloadBtn);
+		
+		// Hide elements initially, show when image loads
+		['.lightbox-counter', '.lightbox-close', '.lightbox-download'].forEach(sel => {
+			const el = content.querySelector(sel);
+			if (el) el.style.visibility = 'hidden';
+		});
+		
+		const img = content.querySelector('.lightbox-image');
 		const showElements = () => {
-			img.nextElementSibling.style.visibility = 'visible'; // counter
-			img.parentElement.querySelector('.lightbox-close').style.visibility = 'visible'; // close button
+			['.lightbox-counter', '.lightbox-close', '.lightbox-download'].forEach(sel => {
+				const el = content.querySelector(sel);
+				if (el) el.style.visibility = 'visible';
+			});
 		};
 		if (img.complete) showElements();
 		else img.addEventListener('load', showElements);

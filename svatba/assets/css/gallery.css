@@ -260,6 +260,31 @@
     opacity: 0.8;
 }
 
+/* Download button - positioned bottom right, mirroring close button */
+.lightbox-download {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 300;
+    text-decoration: none;
+    line-height: 1;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-download:hover {
+    opacity: 0.8;
+}
+
 /* Navigation arrows - positioned at edges of landscape photo width */
 .lightbox-nav {
     position: fixed;
@@ -331,6 +356,11 @@
     
     .lightbox-close {
         top: 20px;
+        right: 20px;
+    }
+    
+    .lightbox-download {
+        bottom: 20px;
         right: 20px;
     }
     
