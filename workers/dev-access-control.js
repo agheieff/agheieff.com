@@ -12,7 +12,16 @@ export default {
     
     // If IP matches, fetch the actual page content
     const url = new URL(request.url);
-    url.hostname = '6ee035e1.agheieff-com.pages.dev'; // Pages preview deployment URL
+    url.hostname = '26d65a79.agheieff-com.pages.dev'; // Pages preview deployment URL
+    
+    // Ensure proper path handling for directory routes
+    let path = url.pathname;
+    if (path === '/svatba') {
+        path = '/svatba/';
+    } else if (path === '/svatba/foto') {
+        path = '/svatba/foto/';
+    }
+    url.pathname = path;
     
     return fetch(url.toString(), request);
   }
