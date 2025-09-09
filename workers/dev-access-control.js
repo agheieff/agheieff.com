@@ -1,6 +1,6 @@
 export default {
   async fetch(request, env) {
-    const ALLOWED_IP = '78.80.80.56';
+    const ALLOWED_IP = '78.80.80.228';
     
     // Get the client IP from Cloudflare headers
     const clientIP = request.headers.get('CF-Connecting-IP');
@@ -12,7 +12,7 @@ export default {
     
     // If IP matches, fetch the actual page content
     const url = new URL(request.url);
-    url.hostname = '2c04f9fb.agheieff-com.pages.dev'; // Pages preview deployment URL
+    url.hostname = '3b0d461b.agheieff-com.pages.dev'; // Pages preview deployment URL
     
     return fetch(url.toString(), request);
   }
