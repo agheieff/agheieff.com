@@ -17,7 +17,7 @@
     text-align: center;
     font-size: 1.2rem;
     color: #666;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     font-style: italic;
 }
 
@@ -250,14 +250,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.5;
-    transition: opacity 0.2s;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
     z-index: 10;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .lightbox-close:hover {
-    opacity: 0.8;
+    opacity: 0.9;
+    transform: scale(1.1);
 }
 
 /* Download button - positioned bottom right, mirroring close button */
@@ -265,29 +267,26 @@
     position: absolute;
     bottom: 25px;
     right: 25px;
-    color: white;
-    font-size: 2.5rem;
-    font-weight: 300;
-    text-decoration: none;
-    line-height: 1;
     width: 2.5rem;
     height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.5;
-    transition: opacity 0.2s;
+    background-image: url('../icons/download.svg');
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
     z-index: 10;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    filter: brightness(0) invert(1) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7));
 }
 
 .lightbox-download:hover {
-    opacity: 0.8;
+    opacity: 0.9;
+    transform: scale(1.1);
 }
 
-/* Navigation arrows - positioned relative to image container */
+/* Navigation arrows - positioned fixed relative to viewport */
 .lightbox-nav {
-    position: absolute;
+    position: fixed;
     top: 50%;
     transform: translateY(-50%);
     color: white;
@@ -378,8 +377,53 @@
     .photo-grid {
         grid-template-columns: repeat(6, 1fr);
     }
-    
+
     .lightbox {
         display: none !important;
+    }
+}
+
+/* Download buttons */
+.download-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.download-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--nav-color, #801010);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    text-align: center;
+    min-width: 200px;
+}
+
+.download-btn:hover {
+    background-color: #a01515;
+    transform: translateY(-1px);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile adjustments for download buttons */
+@media (max-width: 768px) {
+    .download-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .download-btn {
+        min-width: 250px;
+        padding: 1rem 2rem;
     }
 }

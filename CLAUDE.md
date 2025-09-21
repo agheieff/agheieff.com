@@ -116,3 +116,4 @@ When your IP changes, update the worker:
 - The site prioritizes elegance and typography over complex functionality
 - Photos are already optimized and stored in `/svatba/assets/photos/`
 - The wedding date was October 12, 2024
+- don't read the full index.html file, it has over 4500 lines, just do head or tail or whatever every time you need to read it

@@ -134,6 +134,8 @@ header nav ul li .logo {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	height: var(--header-height);
+	width: 100%;
 }
 
 header nav ul li .logo-line {
@@ -147,19 +149,25 @@ header nav {
 	position: fixed;
 	left: 0;
 	top: 0;
-	width: var(--nav-width);
-	height: 100vh;
+	width: 100vw;
+	height: var(--header-height);
 	overflow-y: auto;
 	margin-left: auto;
-	margin-right: calc(var(--logo-height) * -1);
+	margin-right: auto;
 	border: 0px solid var(--nav-border-color);
-	border-right-width: 2px;
+	border-bottom-width: 2px;
 
 	font-size: 25px;
+	z-index: 100;
 }
 
 header nav ul {
 	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: var(--header-height);
+	width: 100%;
 }
 
 header nav ul li .logo {
@@ -168,9 +176,11 @@ header nav ul li .logo {
 }
 
 header nav ul li {
-	border: 0px solid var(--nav-border-color);
-	border-bottom-width: 2px;
-
+	border: none;
+	height: var(--header-height);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 header nav ul li:hover {
@@ -198,9 +208,11 @@ main {
 	line-height: 1.25;
 	flex: 1 0 auto;
 	padding: 20px 0;
-	margin-left: var(--nav-width);
-	width: 60vw;
-	height: 100vh
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: var(--header-height);
+	width: 90vw;
+	height: calc(100vh - var(--header-height))
 }
 
 main section {
@@ -278,8 +290,8 @@ main .copy-text {
 }
 
 footer {
-	width: calc(100vw - var(--nav-width));
-	left: var(--nav-width);
+	width: 100vw;
+	left: 0;
 	background: #333333;
 	color: #ffffff;
 	text-align: center;
@@ -516,122 +528,6 @@ header label svg rect {
 	100% {transform: translatex(0) translatey(0) scale(1);}
 }
 
-@media (max-width: 918px) { /*TODO change the value, this is for testing */
-	header {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100dvw;
-		height: var(--header-height);
-		background-color: var(--nav-color);
-		z-index: 100;
-	}
-
-	header nav {
-		visibility: hidden;
-		margin-top: var(--header-height);
-	}
-
-	.logo, .logo-link {
-		border: none;
-		width: 200px;
-		list-style-type: none;
-		position: fixed;
-		visibility: visible;
-		left: 50vw;
-		margin-left: -100px;
-		top: 0;
-
-		line-height: 1;
-
-		font-size: 14px;
-
-		height: var(--header-height);
-	}
-
-	header nav .logo-name{
-		font-size: 18px;
-		padding-top: 100px;
-	}
-	
-	header nav .logo-and {
-		font-size: 18px;
-	}
-
-	header nav ul li .logo-line {
-		width: 170px;
-	}
-
-	header nav .logo-date {
-		font-size: 18px;
-	}
-	
-	.burger-menu-top-line, .burger-menu-middle-line, .burger-menu-bottom-line {
-		fill: #3a0000;
-	}
-
-	main {
-		position: absolute;
-		top: var(--header-height);
-		margin-left: 0;
-		padding: 0 12vw 0 12vw;
-		width: 100vw;
-		overflow: auto;
-		z-index: 10;
-	}
-
-	main .first-section {
-		margin-top: 50px;
-	}
-
-	main section .about-photo {
-		width: calc((76vw - 3rem) / 3.5);
-	}
-
-	footer {
-		position: fixed;
-		left: 0;
-		bottom: 0;
-		width: 100vw;
-		z-index: 11;
-	}
-
-	.burger-menu-svg {
-		visibility: visible;
-	}
-
-	#burger-menu-checkbox:checked + nav {
-		animation: open-sidebar var(--side-menu-animation-time) forwards;
-	}
-
-	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-top-line {
-		animation: burger-rotate-top var(--side-menu-animation-time) forwards;
-	}
-
-	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-bottom-line {
-		animation: burger-rotate-bottom var(--side-menu-animation-time) forwards;
-	}
-
-	#burger-menu-checkbox:checked ~ label > svg > .burger-menu-middle-line {
-		animation: burger-hide-middle var(--side-menu-animation-time) forwards;
-	}
-
-	#burger-menu-checkbox:not(:checked) ~ label > svg > .burger-menu-top-line {
-		animation: burger-return-top var(--side-menu-animation-time) forwards;
-	}
-
-	#burger-menu-checkbox:not(:checked) ~ label > svg > .burger-menu-bottom-line {
-		animation: burger-return-bottom var(--side-menu-animation-time) forwards;
-	}
-
-	#burger-menu-checkbox:not(:checked) ~ label > svg > .burger-menu-middle-line {
-		animation: burger-return-middle var(--side-menu-animation-time) forwards;
-	}
-
-	header label {
-		cursor: pointer;
-	}
-}
 
 @media (max-width:700px) {
 	main .photos {

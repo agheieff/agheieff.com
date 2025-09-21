@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="cs">
+<!DOCTYPE html> <html lang="cs">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta charset="UTF-8">
@@ -34,7 +33,12 @@
 		<section class="gallery-container">
 			<h1>Děkujeme že jste byli s námi!</h1>
 			<p class="gallery-date">12. října 2024</p>
-			
+
+			<div class="download-buttons">
+				<a href="https://wedding-photos.agheieff.com/zip/foto.zip" class="download-btn">Stáhnout všechny fotografie (1.22GB)</a>
+				<a href="https://wedding-photos.agheieff.com/zip/full_foto.zip" class="download-btn">Stáhnout všechny fotografie v původní kvalitě (2.56GB)</a>
+			</div>
+
 			<div class="photo-grid" id="gallery">
 				<div class="photo-item" data-photo="001">
 					<a href="#photo001">
@@ -56,42 +60,12 @@
 						</picture>
 					</a>
 				</div>
-				<div class="photo-item" data-photo="003">
-					<a href="#photo003">
-						<picture>
-							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_003.webp" type="image/webp">
-							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_003.jpg" 
-							     alt="Fotografie 3" 
-							     loading="lazy">
-						</picture>
-					</a>
-				</div>
 				<div class="photo-item" data-photo="004">
 					<a href="#photo004">
 						<picture>
 							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_004.webp" type="image/webp">
 							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_004.jpg" 
 							     alt="Fotografie 4" 
-							     loading="lazy">
-						</picture>
-					</a>
-				</div>
-				<div class="photo-item" data-photo="005">
-					<a href="#photo005">
-						<picture>
-							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_005.webp" type="image/webp">
-							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_005.jpg" 
-							     alt="Fotografie 5" 
-							     loading="lazy">
-						</picture>
-					</a>
-				</div>
-				<div class="photo-item" data-photo="006">
-					<a href="#photo006">
-						<picture>
-							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_006.webp" type="image/webp">
-							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_006.jpg" 
-							     alt="Fotografie 6" 
 							     loading="lazy">
 						</picture>
 					</a>
@@ -4608,7 +4582,19 @@
 		downloadBtn.className = 'lightbox-download';
 		downloadBtn.href = `https://wedding-photos.agheieff.com/originals/${photoNum}.jpg`;
 		downloadBtn.download = `wedding_photo_${photoNum}.jpg`;
-		downloadBtn.innerHTML = '⬇';
+		downloadBtn.innerHTML = '';
+		// Force download on click instead of opening in browser
+		downloadBtn.addEventListener('click', (e) => {
+			e.preventDefault();
+			// Create a temporary anchor to trigger download
+			const tempLink = document.createElement('a');
+			tempLink.href = downloadBtn.href;
+			tempLink.download = downloadBtn.download;
+			tempLink.style.display = 'none';
+			document.body.appendChild(tempLink);
+			tempLink.click();
+			document.body.removeChild(tempLink);
+		});
 		content.appendChild(downloadBtn);
 		
 		// Hide elements initially, show when image loads
@@ -4626,6 +4612,64 @@
 		};
 		if (img.complete) showElements();
 		else img.addEventListener('load', showElements);
+	});
+
+	// Calculate arrow positions based on screen aspect ratio
+	function calculateArrowPositions() {
+		const screenWidth = window.innerWidth;
+		const screenHeight = window.innerHeight;
+		let buttonPosition;
+
+		if (screenWidth > screenHeight * 1.5) {
+			buttonPosition = (screenWidth * 0.9 - screenHeight * 0.9 * 1.5) / 2 + screenWidth / 40;
+		} else {
+			buttonPosition = screenWidth / 40;
+		}
+
+		document.querySelectorAll('.lightbox-prev').forEach(arrow => {
+			arrow.style.left = `${buttonPosition}px`;
+		});
+
+		document.querySelectorAll('.lightbox-next').forEach(arrow => {
+			arrow.style.right = `${buttonPosition}px`;
+		});
+	}
+
+	// Calculate positions on load and window resize
+	window.addEventListener('load', calculateArrowPositions);
+	window.addEventListener('resize', calculateArrowPositions);
+
+	// Keyboard navigation for lightbox
+	document.addEventListener('keydown', (e) => {
+		// Check if a lightbox is currently open
+		const activeLightbox = document.querySelector('.lightbox:target');
+		if (!activeLightbox) return;
+
+		// Get current photo number from URL hash
+		const currentHash = window.location.hash;
+		if (!currentHash.startsWith('#photo')) return;
+
+		const currentPhotoNum = parseInt(currentHash.replace('#photo', ''));
+		let targetPhotoNum;
+
+		switch(e.key) {
+			case 'ArrowLeft':
+				targetPhotoNum = currentPhotoNum === 1 ? 198 : currentPhotoNum - 1;
+				break;
+			case 'ArrowRight':
+				targetPhotoNum = currentPhotoNum === 198 ? 1 : currentPhotoNum + 1;
+				break;
+			case 'Escape':
+				// Close lightbox when Escape is pressed
+				window.location.hash = '#gallery';
+				return;
+			default:
+				return; // Do nothing for other keys
+		}
+
+		// Navigate to the target photo
+		window.location.hash = `#photo${String(targetPhotoNum).padStart(3, '0')}`;
+		e.preventDefault(); // Prevent default browser behavior
 	});
 	</script>
 </body>
