@@ -6,6 +6,51 @@
 	<title>Děkujeme že jste byli s námi! - Arkadiy & Naomi</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/gallery.css">
+	<script defer>
+	// Global variable to track bandwidth detection completion
+	window.bandwidthDetectionComplete = new Promise((resolve) => {
+		(async () => {
+			/* ---------- bandwidth test ---------- */
+			const testUrl = 'https://wedding-photos.agheieff.com/compressed/129.jpg';
+			const testBytes = 200 * 1024;               // 200 kB is enough
+			const t0 = performance.now();
+			let speedMbps = 100; // Default to fast connection
+
+			try {
+				// Fetch with mode: 'no-cors' to avoid CORS issues
+				const r = await fetch(testUrl, {
+					headers: { 'Range': `bytes=0-${testBytes - 1}` },
+					mode: 'no-cors'
+				});
+
+				// Even with no-cors, we can still measure timing
+				await r.blob();
+
+				const downloadTimeSeconds = (performance.now() - t0) / 1000;
+				speedMbps = (testBytes * 8) / (downloadTimeSeconds * 1000000);
+			} catch {
+				// If fetch fails, fall back to navigator.connection
+				if (navigator.connection && navigator.connection.downlink) {
+					speedMbps = navigator.connection.downlink;
+				}
+			}
+
+			const useCompressed = speedMbps < 50;
+
+			window.imageQuality = useCompressed ? 'compressed' : 'full';
+			console.log(`Bandwidth: ${speedMbps.toFixed(2)} Mbps, using ${window.imageQuality} quality`);
+
+			/* ---------- switch src ---------- */
+			document.querySelectorAll('img').forEach(img => {
+				if (img.src.includes('/full/')) {
+					img.src = img.src.replace('/full/', useCompressed ? '/compressed/' : '/full/');
+				}
+			});
+
+			resolve();
+		})();
+	});
+	</script>
 </head>
 
 <body>
@@ -35,8 +80,9 @@
 			<p class="gallery-date">12. října 2024</p>
 
 			<div class="download-buttons">
-				<a href="https://wedding-photos.agheieff.com/zip/foto.zip" class="download-btn">Stáhnout všechny fotografie (1.22GB)</a>
-				<a href="https://wedding-photos.agheieff.com/zip/full_foto.zip" class="download-btn">Stáhnout všechny fotografie v původní kvalitě (2.56GB)</a>
+				<a href="https://wedding-photos.agheieff.com/zip/foto_compressed.zip" class="download-btn">Stáhnout komprimované fotografie (443MB)</a>
+				<a href="https://wedding-photos.agheieff.com/zip/foto.zip" class="download-btn">Stáhnout všechny fotografie (1.5GB)</a>
+				<a href="https://wedding-photos.agheieff.com/zip/full_foto.zip" class="download-btn">Stáhnout všechny fotografie v původní kvalitě (2.5GB)</a>
 			</div>
 
 			<div class="photo-grid" id="gallery">
@@ -60,12 +106,42 @@
 						</picture>
 					</a>
 				</div>
+				<div class="photo-item" data-photo="003">
+					<a href="#photo003">
+						<picture>
+							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_003.webp" type="image/webp">
+							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_003.jpg"
+							     alt="Fotografie 3"
+							     loading="lazy">
+						</picture>
+					</a>
+				</div>
 				<div class="photo-item" data-photo="004">
 					<a href="#photo004">
 						<picture>
 							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_004.webp" type="image/webp">
 							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_004.jpg" 
 							     alt="Fotografie 4" 
+							     loading="lazy">
+						</picture>
+					</a>
+				</div>
+				<div class="photo-item" data-photo="005">
+					<a href="#photo005">
+						<picture>
+							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_005.webp" type="image/webp">
+							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_005.jpg"
+							     alt="Fotografie 5"
+							     loading="lazy">
+						</picture>
+					</a>
+				</div>
+				<div class="photo-item" data-photo="006">
+					<a href="#photo006">
+						<picture>
+							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_006.webp" type="image/webp">
+							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_006.jpg"
+							     alt="Fotografie 6"
 							     loading="lazy">
 						</picture>
 					</a>
@@ -357,7 +433,9 @@
 							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_035.jpg" 
 							     alt="Fotografie 35" 
 							     loading="lazy">
-						</picture>
+						</picture>for num in 002 004 005 006 007 192 193 194 195; do convert
+      original/$num.jpg -resize 400x267 -quality 75
+      thumbnails/thumb_$num.jpg; done
 					</a>
 				</div>
 				<div class="photo-item" data-photo="036">
@@ -1960,36 +2038,6 @@
 						</picture>
 					</a>
 				</div>
-				<div class="photo-item" data-photo="196">
-					<a href="#photo196">
-						<picture>
-							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_196.webp" type="image/webp">
-							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_196.jpg" 
-							     alt="Fotografie 196" 
-							     loading="lazy">
-						</picture>
-					</a>
-				</div>
-				<div class="photo-item" data-photo="197">
-					<a href="#photo197">
-						<picture>
-							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_197.webp" type="image/webp">
-							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_197.jpg" 
-							     alt="Fotografie 197" 
-							     loading="lazy">
-						</picture>
-					</a>
-				</div>
-				<div class="photo-item" data-photo="198">
-					<a href="#photo198">
-						<picture>
-							<source srcset="https://wedding-photos.agheieff.com/thumbnails/thumb_198.webp" type="image/webp">
-							<img src="https://wedding-photos.agheieff.com/thumbnails/thumb_198.jpg" 
-							     alt="Fotografie 198" 
-							     loading="lazy">
-						</picture>
-					</a>
-				</div>
 			</div>
 		</section>
 		
@@ -1998,13 +2046,12 @@
 		<a href="#gallery" class="lightbox-backdrop"></a>
 		<div class="lightbox-content">
 			<a href="#gallery" class="lightbox-close">×</a>
-			<a href="#photo198" class="lightbox-nav lightbox-prev">‹</a>
 			<a href="#photo002" class="lightbox-nav lightbox-next">›</a>
 			<img src="https://wedding-photos.agheieff.com/full/001.jpg" 
 			     alt="Fotografie 1" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">1 / 198</div>
+			<div class="lightbox-counter">1 / 195</div>
 		</div>
 	</div>
 	<div id="photo002" class="lightbox">
@@ -2017,7 +2064,7 @@
 			     alt="Fotografie 2" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">2 / 198</div>
+			<div class="lightbox-counter">2 / 195</div>
 		</div>
 	</div>
 	<div id="photo003" class="lightbox">
@@ -2030,7 +2077,7 @@
 			     alt="Fotografie 3" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">3 / 198</div>
+			<div class="lightbox-counter">3 / 195</div>
 		</div>
 	</div>
 	<div id="photo004" class="lightbox">
@@ -2043,7 +2090,7 @@
 			     alt="Fotografie 4" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">4 / 198</div>
+			<div class="lightbox-counter">4 / 195</div>
 		</div>
 	</div>
 	<div id="photo005" class="lightbox">
@@ -2056,7 +2103,7 @@
 			     alt="Fotografie 5" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">5 / 198</div>
+			<div class="lightbox-counter">5 / 195</div>
 		</div>
 	</div>
 	<div id="photo006" class="lightbox">
@@ -2069,7 +2116,7 @@
 			     alt="Fotografie 6" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">6 / 198</div>
+			<div class="lightbox-counter">6 / 195</div>
 		</div>
 	</div>
 	<div id="photo007" class="lightbox">
@@ -2082,7 +2129,7 @@
 			     alt="Fotografie 7" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">7 / 198</div>
+			<div class="lightbox-counter">7 / 195</div>
 		</div>
 	</div>
 	<div id="photo008" class="lightbox">
@@ -2095,7 +2142,7 @@
 			     alt="Fotografie 8" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">8 / 198</div>
+			<div class="lightbox-counter">8 / 195</div>
 		</div>
 	</div>
 	<div id="photo009" class="lightbox">
@@ -2108,7 +2155,7 @@
 			     alt="Fotografie 9" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">9 / 198</div>
+			<div class="lightbox-counter">9 / 195</div>
 		</div>
 	</div>
 	<div id="photo010" class="lightbox">
@@ -2121,7 +2168,7 @@
 			     alt="Fotografie 10" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">10 / 198</div>
+			<div class="lightbox-counter">10 / 195</div>
 		</div>
 	</div>
 	<div id="photo011" class="lightbox">
@@ -2134,7 +2181,7 @@
 			     alt="Fotografie 11" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">11 / 198</div>
+			<div class="lightbox-counter">11 / 195</div>
 		</div>
 	</div>
 	<div id="photo012" class="lightbox">
@@ -2147,7 +2194,7 @@
 			     alt="Fotografie 12" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">12 / 198</div>
+			<div class="lightbox-counter">12 / 195</div>
 		</div>
 	</div>
 	<div id="photo013" class="lightbox">
@@ -2160,7 +2207,7 @@
 			     alt="Fotografie 13" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">13 / 198</div>
+			<div class="lightbox-counter">13 / 195</div>
 		</div>
 	</div>
 	<div id="photo014" class="lightbox">
@@ -2173,7 +2220,7 @@
 			     alt="Fotografie 14" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">14 / 198</div>
+			<div class="lightbox-counter">14 / 195</div>
 		</div>
 	</div>
 	<div id="photo015" class="lightbox">
@@ -2186,7 +2233,7 @@
 			     alt="Fotografie 15" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">15 / 198</div>
+			<div class="lightbox-counter">15 / 195</div>
 		</div>
 	</div>
 	<div id="photo016" class="lightbox">
@@ -2199,7 +2246,7 @@
 			     alt="Fotografie 16" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">16 / 198</div>
+			<div class="lightbox-counter">16 / 195</div>
 		</div>
 	</div>
 	<div id="photo017" class="lightbox">
@@ -2212,7 +2259,7 @@
 			     alt="Fotografie 17" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">17 / 198</div>
+			<div class="lightbox-counter">17 / 195</div>
 		</div>
 	</div>
 	<div id="photo018" class="lightbox">
@@ -2225,7 +2272,7 @@
 			     alt="Fotografie 18" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">18 / 198</div>
+			<div class="lightbox-counter">18 / 195</div>
 		</div>
 	</div>
 	<div id="photo019" class="lightbox">
@@ -2238,7 +2285,7 @@
 			     alt="Fotografie 19" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">19 / 198</div>
+			<div class="lightbox-counter">19 / 195</div>
 		</div>
 	</div>
 	<div id="photo020" class="lightbox">
@@ -2251,7 +2298,7 @@
 			     alt="Fotografie 20" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">20 / 198</div>
+			<div class="lightbox-counter">20 / 195</div>
 		</div>
 	</div>
 	<div id="photo021" class="lightbox">
@@ -2264,7 +2311,7 @@
 			     alt="Fotografie 21" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">21 / 198</div>
+			<div class="lightbox-counter">21 / 195</div>
 		</div>
 	</div>
 	<div id="photo022" class="lightbox">
@@ -2277,7 +2324,7 @@
 			     alt="Fotografie 22" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">22 / 198</div>
+			<div class="lightbox-counter">22 / 195</div>
 		</div>
 	</div>
 	<div id="photo023" class="lightbox">
@@ -2290,7 +2337,7 @@
 			     alt="Fotografie 23" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">23 / 198</div>
+			<div class="lightbox-counter">23 / 195</div>
 		</div>
 	</div>
 	<div id="photo024" class="lightbox">
@@ -2303,7 +2350,7 @@
 			     alt="Fotografie 24" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">24 / 198</div>
+			<div class="lightbox-counter">24 / 195</div>
 		</div>
 	</div>
 	<div id="photo025" class="lightbox">
@@ -2316,7 +2363,7 @@
 			     alt="Fotografie 25" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">25 / 198</div>
+			<div class="lightbox-counter">25 / 195</div>
 		</div>
 	</div>
 	<div id="photo026" class="lightbox">
@@ -2329,7 +2376,7 @@
 			     alt="Fotografie 26" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">26 / 198</div>
+			<div class="lightbox-counter">26 / 195</div>
 		</div>
 	</div>
 	<div id="photo027" class="lightbox">
@@ -2342,7 +2389,7 @@
 			     alt="Fotografie 27" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">27 / 198</div>
+			<div class="lightbox-counter">27 / 195</div>
 		</div>
 	</div>
 	<div id="photo028" class="lightbox">
@@ -2355,7 +2402,7 @@
 			     alt="Fotografie 28" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">28 / 198</div>
+			<div class="lightbox-counter">28 / 195</div>
 		</div>
 	</div>
 	<div id="photo029" class="lightbox">
@@ -2368,7 +2415,7 @@
 			     alt="Fotografie 29" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">29 / 198</div>
+			<div class="lightbox-counter">29 / 195</div>
 		</div>
 	</div>
 	<div id="photo030" class="lightbox">
@@ -2381,7 +2428,7 @@
 			     alt="Fotografie 30" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">30 / 198</div>
+			<div class="lightbox-counter">30 / 195</div>
 		</div>
 	</div>
 	<div id="photo031" class="lightbox">
@@ -2394,7 +2441,7 @@
 			     alt="Fotografie 31" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">31 / 198</div>
+			<div class="lightbox-counter">31 / 195</div>
 		</div>
 	</div>
 	<div id="photo032" class="lightbox">
@@ -2407,7 +2454,7 @@
 			     alt="Fotografie 32" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">32 / 198</div>
+			<div class="lightbox-counter">32 / 195</div>
 		</div>
 	</div>
 	<div id="photo033" class="lightbox">
@@ -2420,7 +2467,7 @@
 			     alt="Fotografie 33" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">33 / 198</div>
+			<div class="lightbox-counter">33 / 195</div>
 		</div>
 	</div>
 	<div id="photo034" class="lightbox">
@@ -2433,7 +2480,7 @@
 			     alt="Fotografie 34" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">34 / 198</div>
+			<div class="lightbox-counter">34 / 195</div>
 		</div>
 	</div>
 	<div id="photo035" class="lightbox">
@@ -2446,7 +2493,7 @@
 			     alt="Fotografie 35" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">35 / 198</div>
+			<div class="lightbox-counter">35 / 195</div>
 		</div>
 	</div>
 	<div id="photo036" class="lightbox">
@@ -2459,7 +2506,7 @@
 			     alt="Fotografie 36" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">36 / 198</div>
+			<div class="lightbox-counter">36 / 195</div>
 		</div>
 	</div>
 	<div id="photo037" class="lightbox">
@@ -2472,7 +2519,7 @@
 			     alt="Fotografie 37" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">37 / 198</div>
+			<div class="lightbox-counter">37 / 195</div>
 		</div>
 	</div>
 	<div id="photo038" class="lightbox">
@@ -2485,7 +2532,7 @@
 			     alt="Fotografie 38" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">38 / 198</div>
+			<div class="lightbox-counter">38 / 195</div>
 		</div>
 	</div>
 	<div id="photo039" class="lightbox">
@@ -2498,7 +2545,7 @@
 			     alt="Fotografie 39" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">39 / 198</div>
+			<div class="lightbox-counter">39 / 195</div>
 		</div>
 	</div>
 	<div id="photo040" class="lightbox">
@@ -2511,7 +2558,7 @@
 			     alt="Fotografie 40" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">40 / 198</div>
+			<div class="lightbox-counter">40 / 195</div>
 		</div>
 	</div>
 	<div id="photo041" class="lightbox">
@@ -2524,7 +2571,7 @@
 			     alt="Fotografie 41" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">41 / 198</div>
+			<div class="lightbox-counter">41 / 195</div>
 		</div>
 	</div>
 	<div id="photo042" class="lightbox">
@@ -2537,7 +2584,7 @@
 			     alt="Fotografie 42" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">42 / 198</div>
+			<div class="lightbox-counter">42 / 195</div>
 		</div>
 	</div>
 	<div id="photo043" class="lightbox">
@@ -2550,7 +2597,7 @@
 			     alt="Fotografie 43" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">43 / 198</div>
+			<div class="lightbox-counter">43 / 195</div>
 		</div>
 	</div>
 	<div id="photo044" class="lightbox">
@@ -2563,7 +2610,7 @@
 			     alt="Fotografie 44" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">44 / 198</div>
+			<div class="lightbox-counter">44 / 195</div>
 		</div>
 	</div>
 	<div id="photo045" class="lightbox">
@@ -2576,7 +2623,7 @@
 			     alt="Fotografie 45" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">45 / 198</div>
+			<div class="lightbox-counter">45 / 195</div>
 		</div>
 	</div>
 	<div id="photo046" class="lightbox">
@@ -2589,7 +2636,7 @@
 			     alt="Fotografie 46" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">46 / 198</div>
+			<div class="lightbox-counter">46 / 195</div>
 		</div>
 	</div>
 	<div id="photo047" class="lightbox">
@@ -2602,7 +2649,7 @@
 			     alt="Fotografie 47" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">47 / 198</div>
+			<div class="lightbox-counter">47 / 195</div>
 		</div>
 	</div>
 	<div id="photo048" class="lightbox">
@@ -2615,7 +2662,7 @@
 			     alt="Fotografie 48" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">48 / 198</div>
+			<div class="lightbox-counter">48 / 195</div>
 		</div>
 	</div>
 	<div id="photo049" class="lightbox">
@@ -2628,7 +2675,7 @@
 			     alt="Fotografie 49" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">49 / 198</div>
+			<div class="lightbox-counter">49 / 195</div>
 		</div>
 	</div>
 	<div id="photo050" class="lightbox">
@@ -2641,7 +2688,7 @@
 			     alt="Fotografie 50" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">50 / 198</div>
+			<div class="lightbox-counter">50 / 195</div>
 		</div>
 	</div>
 	<div id="photo051" class="lightbox">
@@ -2654,7 +2701,7 @@
 			     alt="Fotografie 51" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">51 / 198</div>
+			<div class="lightbox-counter">51 / 195</div>
 		</div>
 	</div>
 	<div id="photo052" class="lightbox">
@@ -2667,7 +2714,7 @@
 			     alt="Fotografie 52" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">52 / 198</div>
+			<div class="lightbox-counter">52 / 195</div>
 		</div>
 	</div>
 	<div id="photo053" class="lightbox">
@@ -2680,7 +2727,7 @@
 			     alt="Fotografie 53" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">53 / 198</div>
+			<div class="lightbox-counter">53 / 195</div>
 		</div>
 	</div>
 	<div id="photo054" class="lightbox">
@@ -2693,7 +2740,7 @@
 			     alt="Fotografie 54" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">54 / 198</div>
+			<div class="lightbox-counter">54 / 195</div>
 		</div>
 	</div>
 	<div id="photo055" class="lightbox">
@@ -2706,7 +2753,7 @@
 			     alt="Fotografie 55" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">55 / 198</div>
+			<div class="lightbox-counter">55 / 195</div>
 		</div>
 	</div>
 	<div id="photo056" class="lightbox">
@@ -2719,7 +2766,7 @@
 			     alt="Fotografie 56" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">56 / 198</div>
+			<div class="lightbox-counter">56 / 195</div>
 		</div>
 	</div>
 	<div id="photo057" class="lightbox">
@@ -2732,7 +2779,7 @@
 			     alt="Fotografie 57" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">57 / 198</div>
+			<div class="lightbox-counter">57 / 195</div>
 		</div>
 	</div>
 	<div id="photo058" class="lightbox">
@@ -2745,7 +2792,7 @@
 			     alt="Fotografie 58" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">58 / 198</div>
+			<div class="lightbox-counter">58 / 195</div>
 		</div>
 	</div>
 	<div id="photo059" class="lightbox">
@@ -2758,7 +2805,7 @@
 			     alt="Fotografie 59" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">59 / 198</div>
+			<div class="lightbox-counter">59 / 195</div>
 		</div>
 	</div>
 	<div id="photo060" class="lightbox">
@@ -2771,7 +2818,7 @@
 			     alt="Fotografie 60" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">60 / 198</div>
+			<div class="lightbox-counter">60 / 195</div>
 		</div>
 	</div>
 	<div id="photo061" class="lightbox">
@@ -2784,7 +2831,7 @@
 			     alt="Fotografie 61" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">61 / 198</div>
+			<div class="lightbox-counter">61 / 195</div>
 		</div>
 	</div>
 	<div id="photo062" class="lightbox">
@@ -2797,7 +2844,7 @@
 			     alt="Fotografie 62" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">62 / 198</div>
+			<div class="lightbox-counter">62 / 195</div>
 		</div>
 	</div>
 	<div id="photo063" class="lightbox">
@@ -2810,7 +2857,7 @@
 			     alt="Fotografie 63" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">63 / 198</div>
+			<div class="lightbox-counter">63 / 195</div>
 		</div>
 	</div>
 	<div id="photo064" class="lightbox">
@@ -2823,7 +2870,7 @@
 			     alt="Fotografie 64" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">64 / 198</div>
+			<div class="lightbox-counter">64 / 195</div>
 		</div>
 	</div>
 	<div id="photo065" class="lightbox">
@@ -2836,7 +2883,7 @@
 			     alt="Fotografie 65" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">65 / 198</div>
+			<div class="lightbox-counter">65 / 195</div>
 		</div>
 	</div>
 	<div id="photo066" class="lightbox">
@@ -2849,7 +2896,7 @@
 			     alt="Fotografie 66" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">66 / 198</div>
+			<div class="lightbox-counter">66 / 195</div>
 		</div>
 	</div>
 	<div id="photo067" class="lightbox">
@@ -2862,7 +2909,7 @@
 			     alt="Fotografie 67" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">67 / 198</div>
+			<div class="lightbox-counter">67 / 195</div>
 		</div>
 	</div>
 	<div id="photo068" class="lightbox">
@@ -2875,7 +2922,7 @@
 			     alt="Fotografie 68" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">68 / 198</div>
+			<div class="lightbox-counter">68 / 195</div>
 		</div>
 	</div>
 	<div id="photo069" class="lightbox">
@@ -2888,7 +2935,7 @@
 			     alt="Fotografie 69" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">69 / 198</div>
+			<div class="lightbox-counter">69 / 195</div>
 		</div>
 	</div>
 	<div id="photo070" class="lightbox">
@@ -2901,7 +2948,7 @@
 			     alt="Fotografie 70" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">70 / 198</div>
+			<div class="lightbox-counter">70 / 195</div>
 		</div>
 	</div>
 	<div id="photo071" class="lightbox">
@@ -2914,7 +2961,7 @@
 			     alt="Fotografie 71" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">71 / 198</div>
+			<div class="lightbox-counter">71 / 195</div>
 		</div>
 	</div>
 	<div id="photo072" class="lightbox">
@@ -2927,7 +2974,7 @@
 			     alt="Fotografie 72" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">72 / 198</div>
+			<div class="lightbox-counter">72 / 195</div>
 		</div>
 	</div>
 	<div id="photo073" class="lightbox">
@@ -2940,7 +2987,7 @@
 			     alt="Fotografie 73" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">73 / 198</div>
+			<div class="lightbox-counter">73 / 195</div>
 		</div>
 	</div>
 	<div id="photo074" class="lightbox">
@@ -2953,7 +3000,7 @@
 			     alt="Fotografie 74" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">74 / 198</div>
+			<div class="lightbox-counter">74 / 195</div>
 		</div>
 	</div>
 	<div id="photo075" class="lightbox">
@@ -2966,7 +3013,7 @@
 			     alt="Fotografie 75" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">75 / 198</div>
+			<div class="lightbox-counter">75 / 195</div>
 		</div>
 	</div>
 	<div id="photo076" class="lightbox">
@@ -2979,7 +3026,7 @@
 			     alt="Fotografie 76" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">76 / 198</div>
+			<div class="lightbox-counter">76 / 195</div>
 		</div>
 	</div>
 	<div id="photo077" class="lightbox">
@@ -2992,7 +3039,7 @@
 			     alt="Fotografie 77" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">77 / 198</div>
+			<div class="lightbox-counter">77 / 195</div>
 		</div>
 	</div>
 	<div id="photo078" class="lightbox">
@@ -3005,7 +3052,7 @@
 			     alt="Fotografie 78" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">78 / 198</div>
+			<div class="lightbox-counter">78 / 195</div>
 		</div>
 	</div>
 	<div id="photo079" class="lightbox">
@@ -3018,7 +3065,7 @@
 			     alt="Fotografie 79" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">79 / 198</div>
+			<div class="lightbox-counter">79 / 195</div>
 		</div>
 	</div>
 	<div id="photo080" class="lightbox">
@@ -3031,7 +3078,7 @@
 			     alt="Fotografie 80" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">80 / 198</div>
+			<div class="lightbox-counter">80 / 195</div>
 		</div>
 	</div>
 	<div id="photo081" class="lightbox">
@@ -3044,7 +3091,7 @@
 			     alt="Fotografie 81" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">81 / 198</div>
+			<div class="lightbox-counter">81 / 195</div>
 		</div>
 	</div>
 	<div id="photo082" class="lightbox">
@@ -3057,7 +3104,7 @@
 			     alt="Fotografie 82" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">82 / 198</div>
+			<div class="lightbox-counter">82 / 195</div>
 		</div>
 	</div>
 	<div id="photo083" class="lightbox">
@@ -3070,7 +3117,7 @@
 			     alt="Fotografie 83" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">83 / 198</div>
+			<div class="lightbox-counter">83 / 195</div>
 		</div>
 	</div>
 	<div id="photo084" class="lightbox">
@@ -3083,7 +3130,7 @@
 			     alt="Fotografie 84" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">84 / 198</div>
+			<div class="lightbox-counter">84 / 195</div>
 		</div>
 	</div>
 	<div id="photo085" class="lightbox">
@@ -3096,7 +3143,7 @@
 			     alt="Fotografie 85" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">85 / 198</div>
+			<div class="lightbox-counter">85 / 195</div>
 		</div>
 	</div>
 	<div id="photo086" class="lightbox">
@@ -3109,7 +3156,7 @@
 			     alt="Fotografie 86" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">86 / 198</div>
+			<div class="lightbox-counter">86 / 195</div>
 		</div>
 	</div>
 	<div id="photo087" class="lightbox">
@@ -3122,7 +3169,7 @@
 			     alt="Fotografie 87" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">87 / 198</div>
+			<div class="lightbox-counter">87 / 195</div>
 		</div>
 	</div>
 	<div id="photo088" class="lightbox">
@@ -3135,7 +3182,7 @@
 			     alt="Fotografie 88" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">88 / 198</div>
+			<div class="lightbox-counter">88 / 195</div>
 		</div>
 	</div>
 	<div id="photo089" class="lightbox">
@@ -3148,7 +3195,7 @@
 			     alt="Fotografie 89" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">89 / 198</div>
+			<div class="lightbox-counter">89 / 195</div>
 		</div>
 	</div>
 	<div id="photo090" class="lightbox">
@@ -3161,7 +3208,7 @@
 			     alt="Fotografie 90" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">90 / 198</div>
+			<div class="lightbox-counter">90 / 195</div>
 		</div>
 	</div>
 	<div id="photo091" class="lightbox">
@@ -3174,7 +3221,7 @@
 			     alt="Fotografie 91" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">91 / 198</div>
+			<div class="lightbox-counter">91 / 195</div>
 		</div>
 	</div>
 	<div id="photo092" class="lightbox">
@@ -3187,7 +3234,7 @@
 			     alt="Fotografie 92" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">92 / 198</div>
+			<div class="lightbox-counter">92 / 195</div>
 		</div>
 	</div>
 	<div id="photo093" class="lightbox">
@@ -3200,7 +3247,7 @@
 			     alt="Fotografie 93" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">93 / 198</div>
+			<div class="lightbox-counter">93 / 195</div>
 		</div>
 	</div>
 	<div id="photo094" class="lightbox">
@@ -3213,7 +3260,7 @@
 			     alt="Fotografie 94" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">94 / 198</div>
+			<div class="lightbox-counter">94 / 195</div>
 		</div>
 	</div>
 	<div id="photo095" class="lightbox">
@@ -3226,7 +3273,7 @@
 			     alt="Fotografie 95" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">95 / 198</div>
+			<div class="lightbox-counter">95 / 195</div>
 		</div>
 	</div>
 	<div id="photo096" class="lightbox">
@@ -3239,7 +3286,7 @@
 			     alt="Fotografie 96" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">96 / 198</div>
+			<div class="lightbox-counter">96 / 195</div>
 		</div>
 	</div>
 	<div id="photo097" class="lightbox">
@@ -3252,7 +3299,7 @@
 			     alt="Fotografie 97" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">97 / 198</div>
+			<div class="lightbox-counter">97 / 195</div>
 		</div>
 	</div>
 	<div id="photo098" class="lightbox">
@@ -3265,7 +3312,7 @@
 			     alt="Fotografie 98" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">98 / 198</div>
+			<div class="lightbox-counter">98 / 195</div>
 		</div>
 	</div>
 	<div id="photo099" class="lightbox">
@@ -3278,7 +3325,7 @@
 			     alt="Fotografie 99" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">99 / 198</div>
+			<div class="lightbox-counter">99 / 195</div>
 		</div>
 	</div>
 	<div id="photo100" class="lightbox">
@@ -3291,7 +3338,7 @@
 			     alt="Fotografie 100" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">100 / 198</div>
+			<div class="lightbox-counter">100 / 195</div>
 		</div>
 	</div>
 	<div id="photo101" class="lightbox">
@@ -3304,7 +3351,7 @@
 			     alt="Fotografie 101" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">101 / 198</div>
+			<div class="lightbox-counter">101 / 195</div>
 		</div>
 	</div>
 	<div id="photo102" class="lightbox">
@@ -3317,7 +3364,7 @@
 			     alt="Fotografie 102" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">102 / 198</div>
+			<div class="lightbox-counter">102 / 195</div>
 		</div>
 	</div>
 	<div id="photo103" class="lightbox">
@@ -3330,7 +3377,7 @@
 			     alt="Fotografie 103" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">103 / 198</div>
+			<div class="lightbox-counter">103 / 195</div>
 		</div>
 	</div>
 	<div id="photo104" class="lightbox">
@@ -3343,7 +3390,7 @@
 			     alt="Fotografie 104" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">104 / 198</div>
+			<div class="lightbox-counter">104 / 195</div>
 		</div>
 	</div>
 	<div id="photo105" class="lightbox">
@@ -3356,7 +3403,7 @@
 			     alt="Fotografie 105" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">105 / 198</div>
+			<div class="lightbox-counter">105 / 195</div>
 		</div>
 	</div>
 	<div id="photo106" class="lightbox">
@@ -3369,7 +3416,7 @@
 			     alt="Fotografie 106" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">106 / 198</div>
+			<div class="lightbox-counter">106 / 195</div>
 		</div>
 	</div>
 	<div id="photo107" class="lightbox">
@@ -3382,7 +3429,7 @@
 			     alt="Fotografie 107" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">107 / 198</div>
+			<div class="lightbox-counter">107 / 195</div>
 		</div>
 	</div>
 	<div id="photo108" class="lightbox">
@@ -3395,7 +3442,7 @@
 			     alt="Fotografie 108" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">108 / 198</div>
+			<div class="lightbox-counter">108 / 195</div>
 		</div>
 	</div>
 	<div id="photo109" class="lightbox">
@@ -3408,7 +3455,7 @@
 			     alt="Fotografie 109" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">109 / 198</div>
+			<div class="lightbox-counter">109 / 195</div>
 		</div>
 	</div>
 	<div id="photo110" class="lightbox">
@@ -3421,7 +3468,7 @@
 			     alt="Fotografie 110" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">110 / 198</div>
+			<div class="lightbox-counter">110 / 195</div>
 		</div>
 	</div>
 	<div id="photo111" class="lightbox">
@@ -3434,7 +3481,7 @@
 			     alt="Fotografie 111" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">111 / 198</div>
+			<div class="lightbox-counter">111 / 195</div>
 		</div>
 	</div>
 	<div id="photo112" class="lightbox">
@@ -3447,7 +3494,7 @@
 			     alt="Fotografie 112" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">112 / 198</div>
+			<div class="lightbox-counter">112 / 195</div>
 		</div>
 	</div>
 	<div id="photo113" class="lightbox">
@@ -3460,7 +3507,7 @@
 			     alt="Fotografie 113" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">113 / 198</div>
+			<div class="lightbox-counter">113 / 195</div>
 		</div>
 	</div>
 	<div id="photo114" class="lightbox">
@@ -3473,7 +3520,7 @@
 			     alt="Fotografie 114" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">114 / 198</div>
+			<div class="lightbox-counter">114 / 195</div>
 		</div>
 	</div>
 	<div id="photo115" class="lightbox">
@@ -3486,7 +3533,7 @@
 			     alt="Fotografie 115" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">115 / 198</div>
+			<div class="lightbox-counter">115 / 195</div>
 		</div>
 	</div>
 	<div id="photo116" class="lightbox">
@@ -3499,7 +3546,7 @@
 			     alt="Fotografie 116" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">116 / 198</div>
+			<div class="lightbox-counter">116 / 195</div>
 		</div>
 	</div>
 	<div id="photo117" class="lightbox">
@@ -3512,7 +3559,7 @@
 			     alt="Fotografie 117" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">117 / 198</div>
+			<div class="lightbox-counter">117 / 195</div>
 		</div>
 	</div>
 	<div id="photo118" class="lightbox">
@@ -3525,7 +3572,7 @@
 			     alt="Fotografie 118" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">118 / 198</div>
+			<div class="lightbox-counter">118 / 195</div>
 		</div>
 	</div>
 	<div id="photo119" class="lightbox">
@@ -3538,7 +3585,7 @@
 			     alt="Fotografie 119" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">119 / 198</div>
+			<div class="lightbox-counter">119 / 195</div>
 		</div>
 	</div>
 	<div id="photo120" class="lightbox">
@@ -3551,7 +3598,7 @@
 			     alt="Fotografie 120" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">120 / 198</div>
+			<div class="lightbox-counter">120 / 195</div>
 		</div>
 	</div>
 	<div id="photo121" class="lightbox">
@@ -3564,7 +3611,7 @@
 			     alt="Fotografie 121" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">121 / 198</div>
+			<div class="lightbox-counter">121 / 195</div>
 		</div>
 	</div>
 	<div id="photo122" class="lightbox">
@@ -3577,7 +3624,7 @@
 			     alt="Fotografie 122" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">122 / 198</div>
+			<div class="lightbox-counter">122 / 195</div>
 		</div>
 	</div>
 	<div id="photo123" class="lightbox">
@@ -3590,7 +3637,7 @@
 			     alt="Fotografie 123" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">123 / 198</div>
+			<div class="lightbox-counter">123 / 195</div>
 		</div>
 	</div>
 	<div id="photo124" class="lightbox">
@@ -3603,7 +3650,7 @@
 			     alt="Fotografie 124" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">124 / 198</div>
+			<div class="lightbox-counter">124 / 195</div>
 		</div>
 	</div>
 	<div id="photo125" class="lightbox">
@@ -3616,7 +3663,7 @@
 			     alt="Fotografie 125" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">125 / 198</div>
+			<div class="lightbox-counter">125 / 195</div>
 		</div>
 	</div>
 	<div id="photo126" class="lightbox">
@@ -3629,7 +3676,7 @@
 			     alt="Fotografie 126" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">126 / 198</div>
+			<div class="lightbox-counter">126 / 195</div>
 		</div>
 	</div>
 	<div id="photo127" class="lightbox">
@@ -3642,7 +3689,7 @@
 			     alt="Fotografie 127" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">127 / 198</div>
+			<div class="lightbox-counter">127 / 195</div>
 		</div>
 	</div>
 	<div id="photo128" class="lightbox">
@@ -3655,7 +3702,7 @@
 			     alt="Fotografie 128" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">128 / 198</div>
+			<div class="lightbox-counter">128 / 195</div>
 		</div>
 	</div>
 	<div id="photo129" class="lightbox">
@@ -3668,7 +3715,7 @@
 			     alt="Fotografie 129" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">129 / 198</div>
+			<div class="lightbox-counter">129 / 195</div>
 		</div>
 	</div>
 	<div id="photo130" class="lightbox">
@@ -3681,7 +3728,7 @@
 			     alt="Fotografie 130" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">130 / 198</div>
+			<div class="lightbox-counter">130 / 195</div>
 		</div>
 	</div>
 	<div id="photo131" class="lightbox">
@@ -3694,7 +3741,7 @@
 			     alt="Fotografie 131" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">131 / 198</div>
+			<div class="lightbox-counter">131 / 195</div>
 		</div>
 	</div>
 	<div id="photo132" class="lightbox">
@@ -3707,7 +3754,7 @@
 			     alt="Fotografie 132" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">132 / 198</div>
+			<div class="lightbox-counter">132 / 195</div>
 		</div>
 	</div>
 	<div id="photo133" class="lightbox">
@@ -3720,7 +3767,7 @@
 			     alt="Fotografie 133" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">133 / 198</div>
+			<div class="lightbox-counter">133 / 195</div>
 		</div>
 	</div>
 	<div id="photo134" class="lightbox">
@@ -3733,7 +3780,7 @@
 			     alt="Fotografie 134" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">134 / 198</div>
+			<div class="lightbox-counter">134 / 195</div>
 		</div>
 	</div>
 	<div id="photo135" class="lightbox">
@@ -3746,7 +3793,7 @@
 			     alt="Fotografie 135" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">135 / 198</div>
+			<div class="lightbox-counter">135 / 195</div>
 		</div>
 	</div>
 	<div id="photo136" class="lightbox">
@@ -3759,7 +3806,7 @@
 			     alt="Fotografie 136" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">136 / 198</div>
+			<div class="lightbox-counter">136 / 195</div>
 		</div>
 	</div>
 	<div id="photo137" class="lightbox">
@@ -3772,7 +3819,7 @@
 			     alt="Fotografie 137" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">137 / 198</div>
+			<div class="lightbox-counter">137 / 195</div>
 		</div>
 	</div>
 	<div id="photo138" class="lightbox">
@@ -3785,7 +3832,7 @@
 			     alt="Fotografie 138" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">138 / 198</div>
+			<div class="lightbox-counter">138 / 195</div>
 		</div>
 	</div>
 	<div id="photo139" class="lightbox">
@@ -3798,7 +3845,7 @@
 			     alt="Fotografie 139" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">139 / 198</div>
+			<div class="lightbox-counter">139 / 195</div>
 		</div>
 	</div>
 	<div id="photo140" class="lightbox">
@@ -3811,7 +3858,7 @@
 			     alt="Fotografie 140" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">140 / 198</div>
+			<div class="lightbox-counter">140 / 195</div>
 		</div>
 	</div>
 	<div id="photo141" class="lightbox">
@@ -3824,7 +3871,7 @@
 			     alt="Fotografie 141" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">141 / 198</div>
+			<div class="lightbox-counter">141 / 195</div>
 		</div>
 	</div>
 	<div id="photo142" class="lightbox">
@@ -3837,7 +3884,7 @@
 			     alt="Fotografie 142" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">142 / 198</div>
+			<div class="lightbox-counter">142 / 195</div>
 		</div>
 	</div>
 	<div id="photo143" class="lightbox">
@@ -3850,7 +3897,7 @@
 			     alt="Fotografie 143" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">143 / 198</div>
+			<div class="lightbox-counter">143 / 195</div>
 		</div>
 	</div>
 	<div id="photo144" class="lightbox">
@@ -3863,7 +3910,7 @@
 			     alt="Fotografie 144" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">144 / 198</div>
+			<div class="lightbox-counter">144 / 195</div>
 		</div>
 	</div>
 	<div id="photo145" class="lightbox">
@@ -3876,7 +3923,7 @@
 			     alt="Fotografie 145" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">145 / 198</div>
+			<div class="lightbox-counter">145 / 195</div>
 		</div>
 	</div>
 	<div id="photo146" class="lightbox">
@@ -3889,7 +3936,7 @@
 			     alt="Fotografie 146" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">146 / 198</div>
+			<div class="lightbox-counter">146 / 195</div>
 		</div>
 	</div>
 	<div id="photo147" class="lightbox">
@@ -3902,7 +3949,7 @@
 			     alt="Fotografie 147" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">147 / 198</div>
+			<div class="lightbox-counter">147 / 195</div>
 		</div>
 	</div>
 	<div id="photo148" class="lightbox">
@@ -3915,7 +3962,7 @@
 			     alt="Fotografie 148" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">148 / 198</div>
+			<div class="lightbox-counter">148 / 195</div>
 		</div>
 	</div>
 	<div id="photo149" class="lightbox">
@@ -3928,7 +3975,7 @@
 			     alt="Fotografie 149" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">149 / 198</div>
+			<div class="lightbox-counter">149 / 195</div>
 		</div>
 	</div>
 	<div id="photo150" class="lightbox">
@@ -3941,7 +3988,7 @@
 			     alt="Fotografie 150" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">150 / 198</div>
+			<div class="lightbox-counter">150 / 195</div>
 		</div>
 	</div>
 	<div id="photo151" class="lightbox">
@@ -3954,7 +4001,7 @@
 			     alt="Fotografie 151" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">151 / 198</div>
+			<div class="lightbox-counter">151 / 195</div>
 		</div>
 	</div>
 	<div id="photo152" class="lightbox">
@@ -3967,7 +4014,7 @@
 			     alt="Fotografie 152" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">152 / 198</div>
+			<div class="lightbox-counter">152 / 195</div>
 		</div>
 	</div>
 	<div id="photo153" class="lightbox">
@@ -3980,7 +4027,7 @@
 			     alt="Fotografie 153" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">153 / 198</div>
+			<div class="lightbox-counter">153 / 195</div>
 		</div>
 	</div>
 	<div id="photo154" class="lightbox">
@@ -3993,7 +4040,7 @@
 			     alt="Fotografie 154" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">154 / 198</div>
+			<div class="lightbox-counter">154 / 195</div>
 		</div>
 	</div>
 	<div id="photo155" class="lightbox">
@@ -4006,7 +4053,7 @@
 			     alt="Fotografie 155" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">155 / 198</div>
+			<div class="lightbox-counter">155 / 195</div>
 		</div>
 	</div>
 	<div id="photo156" class="lightbox">
@@ -4019,7 +4066,7 @@
 			     alt="Fotografie 156" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">156 / 198</div>
+			<div class="lightbox-counter">156 / 195</div>
 		</div>
 	</div>
 	<div id="photo157" class="lightbox">
@@ -4032,7 +4079,7 @@
 			     alt="Fotografie 157" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">157 / 198</div>
+			<div class="lightbox-counter">157 / 195</div>
 		</div>
 	</div>
 	<div id="photo158" class="lightbox">
@@ -4045,7 +4092,7 @@
 			     alt="Fotografie 158" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">158 / 198</div>
+			<div class="lightbox-counter">158 / 195</div>
 		</div>
 	</div>
 	<div id="photo159" class="lightbox">
@@ -4058,7 +4105,7 @@
 			     alt="Fotografie 159" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">159 / 198</div>
+			<div class="lightbox-counter">159 / 195</div>
 		</div>
 	</div>
 	<div id="photo160" class="lightbox">
@@ -4071,7 +4118,7 @@
 			     alt="Fotografie 160" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">160 / 198</div>
+			<div class="lightbox-counter">160 / 195</div>
 		</div>
 	</div>
 	<div id="photo161" class="lightbox">
@@ -4084,7 +4131,7 @@
 			     alt="Fotografie 161" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">161 / 198</div>
+			<div class="lightbox-counter">161 / 195</div>
 		</div>
 	</div>
 	<div id="photo162" class="lightbox">
@@ -4097,7 +4144,7 @@
 			     alt="Fotografie 162" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">162 / 198</div>
+			<div class="lightbox-counter">162 / 195</div>
 		</div>
 	</div>
 	<div id="photo163" class="lightbox">
@@ -4110,7 +4157,7 @@
 			     alt="Fotografie 163" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">163 / 198</div>
+			<div class="lightbox-counter">163 / 195</div>
 		</div>
 	</div>
 	<div id="photo164" class="lightbox">
@@ -4123,7 +4170,7 @@
 			     alt="Fotografie 164" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">164 / 198</div>
+			<div class="lightbox-counter">164 / 195</div>
 		</div>
 	</div>
 	<div id="photo165" class="lightbox">
@@ -4136,7 +4183,7 @@
 			     alt="Fotografie 165" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">165 / 198</div>
+			<div class="lightbox-counter">165 / 195</div>
 		</div>
 	</div>
 	<div id="photo166" class="lightbox">
@@ -4149,7 +4196,7 @@
 			     alt="Fotografie 166" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">166 / 198</div>
+			<div class="lightbox-counter">166 / 195</div>
 		</div>
 	</div>
 	<div id="photo167" class="lightbox">
@@ -4162,7 +4209,7 @@
 			     alt="Fotografie 167" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">167 / 198</div>
+			<div class="lightbox-counter">167 / 195</div>
 		</div>
 	</div>
 	<div id="photo168" class="lightbox">
@@ -4175,7 +4222,7 @@
 			     alt="Fotografie 168" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">168 / 198</div>
+			<div class="lightbox-counter">168 / 195</div>
 		</div>
 	</div>
 	<div id="photo169" class="lightbox">
@@ -4188,7 +4235,7 @@
 			     alt="Fotografie 169" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">169 / 198</div>
+			<div class="lightbox-counter">169 / 195</div>
 		</div>
 	</div>
 	<div id="photo170" class="lightbox">
@@ -4201,7 +4248,7 @@
 			     alt="Fotografie 170" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">170 / 198</div>
+			<div class="lightbox-counter">170 / 195</div>
 		</div>
 	</div>
 	<div id="photo171" class="lightbox">
@@ -4214,7 +4261,7 @@
 			     alt="Fotografie 171" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">171 / 198</div>
+			<div class="lightbox-counter">171 / 195</div>
 		</div>
 	</div>
 	<div id="photo172" class="lightbox">
@@ -4227,7 +4274,7 @@
 			     alt="Fotografie 172" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">172 / 198</div>
+			<div class="lightbox-counter">172 / 195</div>
 		</div>
 	</div>
 	<div id="photo173" class="lightbox">
@@ -4240,7 +4287,7 @@
 			     alt="Fotografie 173" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">173 / 198</div>
+			<div class="lightbox-counter">173 / 195</div>
 		</div>
 	</div>
 	<div id="photo174" class="lightbox">
@@ -4253,7 +4300,7 @@
 			     alt="Fotografie 174" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">174 / 198</div>
+			<div class="lightbox-counter">174 / 195</div>
 		</div>
 	</div>
 	<div id="photo175" class="lightbox">
@@ -4266,7 +4313,7 @@
 			     alt="Fotografie 175" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">175 / 198</div>
+			<div class="lightbox-counter">175 / 195</div>
 		</div>
 	</div>
 	<div id="photo176" class="lightbox">
@@ -4279,7 +4326,7 @@
 			     alt="Fotografie 176" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">176 / 198</div>
+			<div class="lightbox-counter">176 / 195</div>
 		</div>
 	</div>
 	<div id="photo177" class="lightbox">
@@ -4292,7 +4339,7 @@
 			     alt="Fotografie 177" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">177 / 198</div>
+			<div class="lightbox-counter">177 / 195</div>
 		</div>
 	</div>
 	<div id="photo178" class="lightbox">
@@ -4305,7 +4352,7 @@
 			     alt="Fotografie 178" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">178 / 198</div>
+			<div class="lightbox-counter">178 / 195</div>
 		</div>
 	</div>
 	<div id="photo179" class="lightbox">
@@ -4318,7 +4365,7 @@
 			     alt="Fotografie 179" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">179 / 198</div>
+			<div class="lightbox-counter">179 / 195</div>
 		</div>
 	</div>
 	<div id="photo180" class="lightbox">
@@ -4331,7 +4378,7 @@
 			     alt="Fotografie 180" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">180 / 198</div>
+			<div class="lightbox-counter">180 / 195</div>
 		</div>
 	</div>
 	<div id="photo181" class="lightbox">
@@ -4344,7 +4391,7 @@
 			     alt="Fotografie 181" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">181 / 198</div>
+			<div class="lightbox-counter">181 / 195</div>
 		</div>
 	</div>
 	<div id="photo182" class="lightbox">
@@ -4357,7 +4404,7 @@
 			     alt="Fotografie 182" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">182 / 198</div>
+			<div class="lightbox-counter">182 / 195</div>
 		</div>
 	</div>
 	<div id="photo183" class="lightbox">
@@ -4370,7 +4417,7 @@
 			     alt="Fotografie 183" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">183 / 198</div>
+			<div class="lightbox-counter">183 / 195</div>
 		</div>
 	</div>
 	<div id="photo184" class="lightbox">
@@ -4383,7 +4430,7 @@
 			     alt="Fotografie 184" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">184 / 198</div>
+			<div class="lightbox-counter">184 / 195</div>
 		</div>
 	</div>
 	<div id="photo185" class="lightbox">
@@ -4396,7 +4443,7 @@
 			     alt="Fotografie 185" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">185 / 198</div>
+			<div class="lightbox-counter">185 / 195</div>
 		</div>
 	</div>
 	<div id="photo186" class="lightbox">
@@ -4409,7 +4456,7 @@
 			     alt="Fotografie 186" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">186 / 198</div>
+			<div class="lightbox-counter">186 / 195</div>
 		</div>
 	</div>
 	<div id="photo187" class="lightbox">
@@ -4422,7 +4469,7 @@
 			     alt="Fotografie 187" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">187 / 198</div>
+			<div class="lightbox-counter">187 / 195</div>
 		</div>
 	</div>
 	<div id="photo188" class="lightbox">
@@ -4435,7 +4482,7 @@
 			     alt="Fotografie 188" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">188 / 198</div>
+			<div class="lightbox-counter">188 / 195</div>
 		</div>
 	</div>
 	<div id="photo189" class="lightbox">
@@ -4448,7 +4495,7 @@
 			     alt="Fotografie 189" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">189 / 198</div>
+			<div class="lightbox-counter">189 / 195</div>
 		</div>
 	</div>
 	<div id="photo190" class="lightbox">
@@ -4461,7 +4508,7 @@
 			     alt="Fotografie 190" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">190 / 198</div>
+			<div class="lightbox-counter">190 / 195</div>
 		</div>
 	</div>
 	<div id="photo191" class="lightbox">
@@ -4474,7 +4521,7 @@
 			     alt="Fotografie 191" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">191 / 198</div>
+			<div class="lightbox-counter">191 / 195</div>
 		</div>
 	</div>
 	<div id="photo192" class="lightbox">
@@ -4487,7 +4534,7 @@
 			     alt="Fotografie 192" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">192 / 198</div>
+			<div class="lightbox-counter">192 / 195</div>
 		</div>
 	</div>
 	<div id="photo193" class="lightbox">
@@ -4500,7 +4547,7 @@
 			     alt="Fotografie 193" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">193 / 198</div>
+			<div class="lightbox-counter">193 / 195</div>
 		</div>
 	</div>
 	<div id="photo194" class="lightbox">
@@ -4513,7 +4560,7 @@
 			     alt="Fotografie 194" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">194 / 198</div>
+			<div class="lightbox-counter">194 / 195</div>
 		</div>
 	</div>
 	<div id="photo195" class="lightbox">
@@ -4521,51 +4568,11 @@
 		<div class="lightbox-content">
 			<a href="#gallery" class="lightbox-close">×</a>
 			<a href="#photo194" class="lightbox-nav lightbox-prev">‹</a>
-			<a href="#photo196" class="lightbox-nav lightbox-next">›</a>
 			<img src="https://wedding-photos.agheieff.com/full/195.jpg" 
 			     alt="Fotografie 195" 
 			     class="lightbox-image"
 			     loading="lazy">
-			<div class="lightbox-counter">195 / 198</div>
-		</div>
-	</div>
-	<div id="photo196" class="lightbox">
-		<a href="#gallery" class="lightbox-backdrop"></a>
-		<div class="lightbox-content">
-			<a href="#gallery" class="lightbox-close">×</a>
-			<a href="#photo195" class="lightbox-nav lightbox-prev">‹</a>
-			<a href="#photo197" class="lightbox-nav lightbox-next">›</a>
-			<img src="https://wedding-photos.agheieff.com/full/196.jpg" 
-			     alt="Fotografie 196" 
-			     class="lightbox-image"
-			     loading="lazy">
-			<div class="lightbox-counter">196 / 198</div>
-		</div>
-	</div>
-	<div id="photo197" class="lightbox">
-		<a href="#gallery" class="lightbox-backdrop"></a>
-		<div class="lightbox-content">
-			<a href="#gallery" class="lightbox-close">×</a>
-			<a href="#photo196" class="lightbox-nav lightbox-prev">‹</a>
-			<a href="#photo198" class="lightbox-nav lightbox-next">›</a>
-			<img src="https://wedding-photos.agheieff.com/full/197.jpg" 
-			     alt="Fotografie 197" 
-			     class="lightbox-image"
-			     loading="lazy">
-			<div class="lightbox-counter">197 / 198</div>
-		</div>
-	</div>
-	<div id="photo198" class="lightbox">
-		<a href="#gallery" class="lightbox-backdrop"></a>
-		<div class="lightbox-content">
-			<a href="#gallery" class="lightbox-close">×</a>
-			<a href="#photo197" class="lightbox-nav lightbox-prev">‹</a>
-			<a href="#photo001" class="lightbox-nav lightbox-next">›</a>
-			<img src="https://wedding-photos.agheieff.com/full/198.jpg" 
-			     alt="Fotografie 198" 
-			     class="lightbox-image"
-			     loading="lazy">
-			<div class="lightbox-counter">198 / 198</div>
+			<div class="lightbox-counter">195 / 195</div>
 		</div>
 	</div>
 	</main>
@@ -4586,14 +4593,21 @@
 		// Force download on click instead of opening in browser
 		downloadBtn.addEventListener('click', (e) => {
 			e.preventDefault();
-			// Create a temporary anchor to trigger download
-			const tempLink = document.createElement('a');
-			tempLink.href = downloadBtn.href;
-			tempLink.download = downloadBtn.download;
-			tempLink.style.display = 'none';
-			document.body.appendChild(tempLink);
-			tempLink.click();
-			document.body.removeChild(tempLink);
+			// Standard download approach with fetch and blob
+			fetch(downloadBtn.href)
+				.then(response => response.blob())
+				.then(blob => {
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.style.display = 'none';
+					a.href = url;
+					a.download = downloadBtn.download;
+					document.body.appendChild(a);
+					a.click();
+					window.URL.revokeObjectURL(url);
+					document.body.removeChild(a);
+				})
+				.catch(error => console.error('Download error:', error));
 		});
 		content.appendChild(downloadBtn);
 		
@@ -4654,10 +4668,12 @@
 
 		switch(e.key) {
 			case 'ArrowLeft':
-				targetPhotoNum = currentPhotoNum === 1 ? 198 : currentPhotoNum - 1;
+				if (currentPhotoNum === 1) return; // Do nothing on first photo
+				targetPhotoNum = currentPhotoNum - 1;
 				break;
 			case 'ArrowRight':
-				targetPhotoNum = currentPhotoNum === 198 ? 1 : currentPhotoNum + 1;
+				if (currentPhotoNum === 195) return; // Do nothing on last photo
+				targetPhotoNum = currentPhotoNum + 1;
 				break;
 			case 'Escape':
 				// Close lightbox when Escape is pressed
@@ -4671,6 +4687,52 @@
 		window.location.hash = `#photo${String(targetPhotoNum).padStart(3, '0')}`;
 		e.preventDefault(); // Prevent default browser behavior
 	});
+
+	// Simple preloading for adjacent photos (optional enhancement)
+	function preloadAdjacentPhotos(currentPhotoNum) {
+		// Preload next and previous photos in the background
+		const adjacentPhotos = [currentPhotoNum - 1, currentPhotoNum + 1];
+
+		adjacentPhotos.forEach(photoNum => {
+			if (photoNum >= 1 && photoNum <= 195) {
+				const img = new Image();
+				const quality = window.imageQuality || 'full';
+				img.src = `https://wedding-photos.agheieff.com/${quality}/${String(photoNum).padStart(3, '0')}.jpg`;
+			}
+		});
+	}
+
+	// Handle lightbox navigation to preload adjacent photos
+	document.addEventListener('click', (e) => {
+		const lightboxLink = e.target.closest('a[href^="#photo"]');
+		if (lightboxLink) {
+			const photoNum = parseInt(lightboxLink.href.split('#photo')[1]);
+			if (!isNaN(photoNum)) {
+				// Preload adjacent photos when user clicks on a photo
+				preloadAdjacentPhotos(photoNum);
+			}
+		}
+	});
+
+	// Handle hash changes to preload adjacent photos
+	window.addEventListener('hashchange', () => {
+		const hash = window.location.hash;
+		if (hash.startsWith('#photo')) {
+			const photoNum = parseInt(hash.replace('#photo', ''));
+			if (!isNaN(photoNum)) {
+				preloadAdjacentPhotos(photoNum);
+			}
+		}
+	});
+
+	// Initial preload if URL has photo hash
+	if (window.location.hash.startsWith('#photo')) {
+		const photoNum = parseInt(window.location.hash.replace('#photo', ''));
+		if (!isNaN(photoNum)) {
+			preloadAdjacentPhotos(photoNum);
+		}
+	}
+
 	</script>
 </body>
 </html>
