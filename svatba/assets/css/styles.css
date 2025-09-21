@@ -30,7 +30,7 @@
 
 	--nav-width: max(300px, 15vw);
 
-	--header-height: max(60px, 10vh);
+	--header-height: max(90px, 10vh);
 	--main-height: calc(100vh-var(--header-height));
 
 	--nav-border-color: #ffffff;
