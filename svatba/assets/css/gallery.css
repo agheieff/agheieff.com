@@ -38,6 +38,48 @@
    - 1 column: 198 rows (no remainder)
 */
 
+/* Responsive breakpoints */
+/* 2000+ px - 6 columns */
+@media (min-width: 2000px) {
+    .photo-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* 1650 - 2000 px - 5 columns */
+@media (min-width: 1650px) and (max-width: 1999px) {
+    .photo-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* 1300 - 1650 px - 4 columns */
+@media (min-width: 1300px) and (max-width: 1649px) {
+    .photo-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 950 - 1300 px - 3 columns */
+@media (min-width: 950px) and (max-width: 1299px) {
+    .photo-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 600 - 950 px - 2 columns */
+@media (min-width: 600px) and (max-width: 949px) {
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Less than 600 px - 1 column */
+@media (max-width: 599px) {
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
 /* Individual photo container */
 .photo-item {
