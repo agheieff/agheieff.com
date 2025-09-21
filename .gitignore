@@ -15,7 +15,5 @@
 !**/*.js
 !DEPLOYMENT.md
 
-!/
+!**/
 
-# Ignore photo directories
-svatba_foto_/
